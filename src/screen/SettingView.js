@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
+import PropTypes from 'prop-types';
+
+// model
+import Router from "../common/Router";
 
 class SettingView extends Component {
   _onPressButton() {
-    return null;
+    this.props.onPressSetting()
   }
 
   render() {
@@ -44,11 +48,9 @@ class SettingView extends Component {
   }
 }
 
-export default SettingView;
-
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: "#fff",
     justifyContent: "center"
   },
@@ -63,3 +65,9 @@ const styles = StyleSheet.create({
     marginBottom: 10
   }
 });
+
+SettingView.propTypes = {
+  onPressSetting: PropTypes.func.isRequired,
+};
+
+export default SettingView;

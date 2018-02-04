@@ -7,15 +7,16 @@ import Router from './src/common/Router';
 
 // screen
 import SettingView from './src/screen/SettingView';
+import HomeView from './src/screen/HomeView';
 
 const RootStack = StackNavigator(
   {
-    Setting: {
-      screen: SettingView,
+    Home: {
+      screen: HomeView,
     },
   },
   {
-    initialRouteName: Router.SETTING,
+    initialRouteName: Router.HOME,
   }
 );
 
