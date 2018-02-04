@@ -2,6 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { StackNavigator } from 'react-navigation';
 
+// model
+import Router from './src/common/Router';
+
 // screen
 import SettingView from './src/screen/SettingView';
 
@@ -12,7 +15,7 @@ const RootStack = StackNavigator(
     },
   },
   {
-    initialRouteName: 'Setting',
+    initialRouteName: Router.SETTING,
   }
 );
 
