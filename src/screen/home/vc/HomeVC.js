@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 // view
-import SettingView from "./SettingView";
+import SettingVC from "./SettingVC";
 
-class HomeView extends Component {
+class HomeVC extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,13 +12,13 @@ class HomeView extends Component {
     };
   }
 
-  onPressSetting() {
+  onCompleteSetup() {
     this.setState({ ...this.state, isGradeSetting: true });
   }
 
   render() {
     return !this.state.isGradeSetting ? (
-      <SettingView onPressSetting={this.onPressSetting.bind(this)} />
+      <SettingVC onCompleteSetup={this.onCompleteSetup.bind(this)} />
     ) : (
       <View>
         <Text>this is home view</Text>
@@ -27,4 +27,4 @@ class HomeView extends Component {
   }
 }
 
-export default HomeView;
+export default HomeVC;

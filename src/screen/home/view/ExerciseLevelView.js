@@ -1,17 +1,27 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
-import PropTypes from 'prop-types';
-import * as firebase from 'firebase';
+import PropTypes from "prop-types";
+import * as firebase from "firebase";
 
 // model
-import Router from "../common/Router";
+import Router from "../../../common/Router";
 
-class SettingView extends Component {
+class ExerciseLevelView extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      step: 0
+    };
+  }
+
   _onPressButton() {
     // this.props.onPressSetting()
-    firebase.database().ref('users/' + 10).set({
-      highscore: 100
-    });
+    firebase
+      .database()
+      .ref("users/" + 10)
+      .set({
+        highscore: 100
+      });
   }
 
   render() {
@@ -52,7 +62,6 @@ class SettingView extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -71,8 +80,4 @@ const styles = StyleSheet.create({
   }
 });
 
-SettingView.propTypes = {
-  onPressSetting: PropTypes.func.isRequired,
-};
-
-export default SettingView;
+export default ExerciseLevelView;

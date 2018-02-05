@@ -10,13 +10,12 @@ import { firebaseConfig } from './configuration';
 import Router from './src/common/Router';
 
 // screen
-import SettingView from './src/screen/SettingView';
-import HomeView from './src/screen/HomeView';
+import HomeVC from './src/screen/home/vc/HomeVC';
 
 const RootStack = StackNavigator(
   {
     Home: {
-      screen: HomeView,
+      screen: HomeVC,
     },
   },
   {
