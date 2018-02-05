@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 import PropTypes from 'prop-types';
+import * as firebase from 'firebase';
 
 // model
 import Router from "../common/Router";
 
 class SettingView extends Component {
   _onPressButton() {
-    this.props.onPressSetting()
+    // this.props.onPressSetting()
+    firebase.database().ref('users/' + 10).set({
+      highscore: 100
+    });
   }
 
   render() {
@@ -47,6 +51,7 @@ class SettingView extends Component {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
