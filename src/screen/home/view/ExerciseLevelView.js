@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 // common
 import Router from "../../../common/Router";
-import StorageKeys from "../../../common/StorageKeys";
 
 class ExerciseLevelView extends Component {
   constructor(props) {
@@ -12,24 +11,6 @@ class ExerciseLevelView extends Component {
     this.state = {
       step: 0
     };
-  }
-
-  async _onPressButton(level) {
-    try {
-      await AsyncStorage.setItem(StorageKeys.exerciseLevel, level);
-    } catch (error) {
-      console.log("set error", error);
-    }
-
-    try {
-      const value = await AsyncStorage.getItem(StorageKeys.exerciseLevel);
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-      }
-    } catch (error) {
-      console.log("get error!", error);
-    }
   }
 
   render() {
@@ -57,7 +38,7 @@ class ExerciseLevelView extends Component {
             return (
               <View key={index} style={styles.buttonView}>
                 <Button
-                  onPress={() => this._onPressButton(item.title)}
+                  onPress={() => this.props.onPressButton(item.title)}
                   title={item.title}
                   color={item.color}
                 />
@@ -87,5 +68,9 @@ const styles = StyleSheet.create({
     marginBottom: 10
   }
 });
+
+ExerciseLevelView.propTypes = {
+  onPressButton: PropTypes.func.isRequired
+};
 
 export default ExerciseLevelView;

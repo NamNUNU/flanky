@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 import PropTypes from "prop-types";
 
-// model
+// common
 import Router from "../../../common/Router";
+import StorageDC from "../../../common/dc/StorageDC";
+import StorageKeys from "../../../common/StorageKeys";
 
 // view
 import ExerciseLevelView from "../view/ExerciseLevelView";
@@ -16,11 +18,15 @@ class SettingVC extends Component {
     };
   }
 
+  _onPressButton(level) {
+    StorageDC.setItem(StorageKeys.exerciseLevel, level);
+  }
+
   renderBody(step) {
     console.log(step);
     switch (step) {
       case 0:
-        return <ExerciseLevelView />;
+        return <ExerciseLevelView onPressButton={this._onPressButton} />;
       case 1:
         return;
       default:
