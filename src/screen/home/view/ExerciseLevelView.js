@@ -1,27 +1,35 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button, AsyncStorage } from "react-native";
 import PropTypes from "prop-types";
-import * as firebase from "firebase";
 
-// model
+// common
 import Router from "../../../common/Router";
+import StorageKeys from "../../../common/StorageKeys";
 
 class ExerciseLevelView extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       step: 0
     };
   }
 
-  _onPressButton() {
-    // this.props.onPressSetting()
-    firebase
-      .database()
-      .ref("users/" + 10)
-      .set({
-        highscore: 100
-      });
+  async _onPressButton(level) {
+    try {
+      await AsyncStorage.setItem(StorageKeys.exerciseLevel, level);
+    } catch (error) {
+      console.log("set error", error);
+    }
+
+    try {
+      const value = await AsyncStorage.getItem(StorageKeys.exerciseLevel);
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      console.log("get error!", error);
+    }
   }
 
   render() {
@@ -49,7 +57,7 @@ class ExerciseLevelView extends Component {
             return (
               <View key={index} style={styles.buttonView}>
                 <Button
-                  onPress={this._onPressButton.bind(this)}
+                  onPress={() => this._onPressButton(item.title)}
                   title={item.title}
                   color={item.color}
                 />

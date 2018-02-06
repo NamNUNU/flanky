@@ -10,17 +10,17 @@ import ExerciseLevelView from "../view/ExerciseLevelView";
 
 class SettingVC extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       step: 0
     };
   }
 
   renderBody(step) {
-    console.log(step)
+    console.log(step);
     switch (step) {
-      case 0: 
-      return <ExerciseLevelView />;
+      case 0:
+        return <ExerciseLevelView />;
       case 1:
         return;
       default:
@@ -29,7 +29,7 @@ class SettingVC extends Component {
   }
 
   render() {
-    return (this.renderBody(this.state.step))
+    return this.renderBody(this.state.step);
   }
 }
 
