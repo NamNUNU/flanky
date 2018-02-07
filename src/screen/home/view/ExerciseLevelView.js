@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Text, Button, AsyncStorage } from "react-native";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, Button, AsyncStorage } from 'react-native';
+import PropTypes from 'prop-types';
 
 // common
-import Router from "../../../util/Router";
+import Router from '../../../util/Router';
 
 class ExerciseLevelView extends Component {
   constructor(props) {
@@ -16,16 +16,16 @@ class ExerciseLevelView extends Component {
   render() {
     const buttonName = [
       {
-        title: "Easy",
-        color: "#2196f3"
+        title: 'Easy',
+        color: '#2196f3'
       },
       {
-        title: "Normal",
-        color: "#8ac24a"
+        title: 'Normal',
+        color: '#8ac24a'
       },
       {
-        title: "Hard",
-        color: "#ff5723"
+        title: 'Hard',
+        color: '#ff5723'
       }
     ];
     return (
@@ -54,12 +54,12 @@ class ExerciseLevelView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center"
+    backgroundColor: '#fff',
+    justifyContent: 'center'
   },
   titleView: {
     marginBottom: 10,
-    alignItems: "center"
+    alignItems: 'center'
   },
   titleText: {
     fontSize: 24

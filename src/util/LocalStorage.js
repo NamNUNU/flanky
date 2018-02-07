@@ -1,11 +1,10 @@
 import { AsyncStorage } from "react-native";
 
 class LocalStorage {
-  static KEY_exerciseLevel = 'exerciseLevel';
+  static  KEY_exerciseLevel = 'exerciseLevel';
   
   static async setItem(key, value) {
     try {
-      console.log("value", value);
       await AsyncStorage.setItem(key, value);
     } catch (error) {
       console.log("set error:", error);
