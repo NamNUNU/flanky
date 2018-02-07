@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Button, AsyncStorage } from "react-native";
 import PropTypes from "prop-types";
 
 // common
-import Router from "../../../common/Router";
+import Router from "../../../util/Router";
 
 class ExerciseLevelView extends Component {
   constructor(props) {

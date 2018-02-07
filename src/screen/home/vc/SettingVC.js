@@ -3,9 +3,8 @@ import { StyleSheet, View, Text, Button } from "react-native";
 import PropTypes from "prop-types";
 
 // common
-import Router from "../../../common/Router";
-import StorageDC from "../../../common/dc/StorageDC";
-import StorageKeys from "../../../common/StorageKeys";
+import Router from "../../../util/Router";
+import LocalStorage from "../../../util/LocalStorage";
 
 // view
 import ExerciseLevelView from "../view/ExerciseLevelView";
@@ -19,7 +18,7 @@ class SettingVC extends Component {
   }
 
   _onPressButton(level) {
-    StorageDC.setItem(StorageKeys.exerciseLevel, level);
+    LocalStorage.setItem(LocalStorage.KEY_exerciseLevel, level);
   }
 
   renderBody(step) {

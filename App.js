@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { StackNavigator } from 'react-navigation';
 
 // model
-import Router from './src/common/Router';
+import Router from './src/util/Router';
 
 // screen
 import HomeVC from './src/screen/home/vc/HomeVC';
