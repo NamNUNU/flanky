@@ -10,22 +10,28 @@
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
-        "jsx": true,
-        "modules": true,
-        "experimentalObjectRestSpread": true
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
     }
-},
-  "plugins": ["react", "react-native"],
+  },
+  "plugins": ["babel", "react", "react-native"],
+  "parser": "babel-eslint",
   "rules": {
     "react-native/no-unused-styles": 2,
     "react-native/split-platform-components": 2,
     "react-native/no-inline-styles": 2,
-    "react-native/no-color-literals": 2,
-    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-console": ["warn", {
+      "allow": ["warn", "error"]
+    }],
     "linebreak-style": ["warn", "unix"],
     "quotes": ["warn", "single"],
     "semi": ["warn", "always"],
     "no-unused-expressions": "warn",
-    "no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }]
+    "no-unused-vars": ["warn", {
+      "vars": "all",
+      "args": "after-used",
+      "ignoreRestSiblings": false
+    }]
   }
 }

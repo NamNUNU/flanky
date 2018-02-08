@@ -1,4 +1,4 @@
-import { AsyncStorage } from "react-native";
+import { AsyncStorage } from 'react-native';
 
 class LocalStorage {
   static  KEY_exerciseLevel = 'exerciseLevel';
@@ -7,7 +7,7 @@ class LocalStorage {
     try {
       await AsyncStorage.setItem(key, value);
     } catch (error) {
-      console.log("set error:", error);
+      console.log('set error:', error);
     }
   }
 
@@ -16,7 +16,7 @@ class LocalStorage {
     try {
       const value = await AsyncStorage.getItem(key,func);
     } catch (error) {
-      console.log("get error:", error);
+      console.log('get error:', error);
     }
   }
 }

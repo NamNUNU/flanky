@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, Button } from 'react-native';
+import PropTypes from 'prop-types';
 
 // common
-import Router from "../../../util/Router";
-import LocalStorage from "../../../util/LocalStorage";
+import Router from '../../../util/Router';
+import LocalStorage from '../../../util/LocalStorage';
 
 // view
-import ExerciseLevelView from "../view/ExerciseLevelView";
+import ExerciseLevelView from '../view/ExerciseLevelView';
 
 class SettingVC extends Component {
   constructor(props) {
