@@ -6,32 +6,46 @@ import PropTypes from 'prop-types';
 import Router from '../util/Router';
 import LocalStorage from '../util/LocalStorage';
 
-class SettingVC extends Component {
+// component
+import SelectList from '../component/SelectList';
+
+interface SettingScreenState {
+  selectListItem: string[];
+}
+
+class SettingScreen extends Component<{}, SettingScreenState> {
   constructor(props) {
     super(props);
+    this.state = {
+      selectListItem: ['Easy', 'Normal', 'Hard'],
+    }
   }
 
-  _onPressButton(level) {
+  componentDidMount() {
+
+  }
+
+  onPressButton(level) {
     LocalStorage.setItem(LocalStorage.KEY_exerciseLevel, level);
   }
 
-  // renderBody(step) {
-  //   console.log(step);
-  //   switch (step) {
-  //     case 0:
-  //       return <ExerciseLevelView onPressButton={this._onPressButton} />;
-  //     case 1:
-  //       return;
-  //     default:
-  //       break;
-  //   }
-  // }
-
   render() {
-    return (<View>
-        <Text> TEST</Text> 
-      </View>)
+    return (<View style={styles.container}>
+      <SelectList
+        title={'운동 수준을 선택해주세요'}
+        selectListItem={this.state.selectListItem}
+        onPress={this.onPressButton}
+      />
+    </View>)
   }
 }
 
-export default SettingVC;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center'
+  },
+});
+
+export default SettingScreen;
