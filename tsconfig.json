@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es6",
+    "experimentalDecorators": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true
+  }
+}
