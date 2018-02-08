@@ -6,16 +6,20 @@ import { StackNavigator } from 'react-navigation';
 import Router from './src/util/Router';
 
 // screen
-import HomeVC from './src/screen/home/vc/HomeVC';
+import HomeVC from './src/screen/HomeScreen';
+import SettingVC from './src/screen/SettingScreen';
 
 const RootStack = StackNavigator(
   {
+    Setting: {
+      screen: SettingVC,
+    },
     Home: {
       screen: HomeVC,
     },
   },
   {
-    initialRouteName: Router.HOME,
+    initialRouteName: Router.SETTING,
   }
 );
 
