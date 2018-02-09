@@ -4,27 +4,19 @@ import { StyleSheet, View, Text } from 'react-native';
 // view
 // import SettingVC from './SettingVC';
 
-class HomeVC extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     isGradeSetting: false
-  //   };
-  // }
+class HomeScreen extends Component<{},{}> {
 
   // onCompleteSetup() {
   //   this.setState({ ...this.state, isGradeSetting: true });
   // }
 
-  // render() {
-  //   return !this.state.isGradeSetting ? (
-  //     <SettingVC onCompleteSetup={this.onCompleteSetup.bind(this)} />
-  //   ) : (
-  //     <View>
-  //       <Text>this is home view</Text>
-  //     </View>
-  //   );
-  // }
+  render() {
+    return (
+      <View>
+        <Text>this is home view</Text>
+      </View>
+    );
+  }
 }
 
-export default HomeVC;
+export default HomeScreen;
