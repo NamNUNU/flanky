@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-// import { NavigationScreenProps, NavigatorType } from 'react-navigation';
 import { StyleSheet, View, Text, Button } from 'react-native';
 
 // common
 import Router from '../util/Router';
 import LocalStorage from '../util/LocalStorage';
+import { NavigationProps } from '../common/Model';
 
 // component
 import SelectList from '../component/SelectList';
@@ -13,11 +13,7 @@ interface SettingScreenState {
   selectListItem: string[];
 }
 
-interface SettingScreenProps {
-  navigation: any;
-}
-
-class SettingScreen extends Component<SettingScreenProps, SettingScreenState> {
+class SettingScreen extends Component<NavigationProps, SettingScreenState> {
 
   constructor(props) {
     super(props);
@@ -27,17 +23,9 @@ class SettingScreen extends Component<SettingScreenProps, SettingScreenState> {
     }
   }
 
-  componentDidMount() {
-    LocalStorage.getItem(LocalStorage.KEY_exerciseLevel, this.fetchedLocalItem);
-  }
-
-  fetchedLocalItem(value) {
-    console.log('im in', value);
-  }
-
   onPressButton(level) {
-    this.props.navigation.navigate(Router.HOME);
     LocalStorage.setItem(LocalStorage.KEY_exerciseLevel, level);
+    this.props.navigation.goback();
   }
 
   render() {

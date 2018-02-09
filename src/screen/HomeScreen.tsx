@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-// view
-// import SettingVC from './SettingVC';
+// utill
+import Router from '../util/Router';
+import LocalStorage from '../util/LocalStorage';
+import { NavigationProps } from '../common/Model';
 
-class HomeScreen extends Component<{},{}> {
+class HomeScreen extends Component<NavigationProps, {}> {
 
-  // onCompleteSetup() {
-  //   this.setState({ ...this.state, isGradeSetting: true });
-  // }
+  componentDidMount() {
+    LocalStorage.getItem(LocalStorage.KEY_exerciseLevel, this.fetchedLocalItem.bind(this));
+  }
+
+  fetchedLocalItem(error: Error, result: string) {
+    if (result === undefined) this.props.navigation.navigate(Router.SETTING);
+    console.log(result);
+  }
 
   render() {
     return (
