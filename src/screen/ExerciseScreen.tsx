@@ -23,11 +23,18 @@ class ExerciseScreen extends Component<
     };
   }
 
-  _onPressButton() {
+  _onPressStartButton() {
     this.setState(
       { isRunning: !this.state.isRunning },
       this._onStartTime.bind(this)
     );
+  }
+
+  _onPressResetButton() {
+    this.setState({
+      ...this.state,
+      second: 0
+    });
   }
 
   _onStartTime() {
@@ -47,8 +54,11 @@ class ExerciseScreen extends Component<
     return (
       <View>
         <Text>{this.state.second}</Text>
-        <TouchableOpacity onPress={this._onPressButton.bind(this)}>
+        <TouchableOpacity onPress={this._onPressStartButton.bind(this)}>
           <Text>{this.state.isRunning ? 'Stop' : 'Start'}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this._onPressResetButton.bind(this)}>
+          <Text>Reset</Text>
         </TouchableOpacity>
       </View>
     );
