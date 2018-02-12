@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
+import Exercise from '../common/Exercise';
+
 interface ExerciseScreenProps {
   navigation: any;
 }
@@ -8,6 +10,8 @@ interface ExerciseScreenProps {
 interface ExerciseScreenState {
   second: number;
   isRunning: boolean;
+  exercisePlan: number[];
+  currentStep: number;
 }
 
 class ExerciseScreen extends Component<
@@ -18,8 +22,11 @@ class ExerciseScreen extends Component<
   constructor(props) {
     super(props);
     this.state = {
+      ...this.state,
       second: 0,
-      isRunning: false
+      currentStep:0,
+      isRunning: false,
+      exercisePlan: Exercise.getExercisePlan()
     };
   }
 
@@ -53,6 +60,7 @@ class ExerciseScreen extends Component<
   render() {
     return (
       <View>
+        
         <Text>{this.state.second}</Text>
         <TouchableOpacity onPress={this._onPressStartButton.bind(this)}>
           <Text>{this.state.isRunning ? 'Stop' : 'Start'}</Text>
