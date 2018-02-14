@@ -17,14 +17,14 @@ interface ExerciseScreenState {
 class ExerciseScreen extends Component<
   ExerciseScreenProps,
   ExerciseScreenState
-> {
+  > {
   stopwatch: number;
   constructor(props) {
     super(props);
     this.state = {
       ...this.state,
       second: 0,
-      currentStep:0,
+      currentStep: 0,
       isRunning: false,
       exercisePlan: Exercise.getExercisePlan()
     };
@@ -38,8 +38,10 @@ class ExerciseScreen extends Component<
   }
 
   _onPressResetButton() {
+    clearInterval(this.stopwatch);
     this.setState({
       ...this.state,
+      isRunning: false,
       second: 0
     });
   }
@@ -60,7 +62,7 @@ class ExerciseScreen extends Component<
   render() {
     return (
       <View>
-        
+
         <Text>{this.state.second}</Text>
         <TouchableOpacity onPress={this._onPressStartButton.bind(this)}>
           <Text>{this.state.isRunning ? 'Stop' : 'Start'}</Text>
