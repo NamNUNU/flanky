@@ -3,13 +3,10 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 // model
 import Exercise from '../common/Exercise';
+import { NavigationProps } from '../common/Model';
 
 // util
 import LocalStorage from '../util/LocalStorage';
-
-interface ExerciseScreenProps {
-  navigation: any;
-}
 
 interface ExerciseScreenState {
   second: number;
@@ -19,7 +16,7 @@ interface ExerciseScreenState {
 }
 
 class ExerciseScreen extends Component<
-  ExerciseScreenProps,
+  NavigationProps,
   ExerciseScreenState
   > {
   stopwatch: number;

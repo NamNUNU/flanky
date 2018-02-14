@@ -9,15 +9,11 @@ import { NavigationProps } from '../common/Model';
 // component
 import SelectList from '../component/SelectList';
 
-interface SettingScreenProps {
-  navigation: any;
-}
-
 interface SettingScreenState {
   selectListItem: string[];
 }
 
-class SettingScreen extends Component<SettingScreenProps, SettingScreenState> {
+class SettingScreen extends Component<NavigationProps, SettingScreenState> {
 
   constructor(props) {
     super(props);
@@ -35,7 +31,6 @@ class SettingScreen extends Component<SettingScreenProps, SettingScreenState> {
   }
 
   render() {
-    
     return (<View style={styles.container}>
       <SelectList
         title={'운동 수준을 선택해주세요'}

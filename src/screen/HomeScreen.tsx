@@ -3,23 +3,26 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 // model
 import { UserData } from '../common/Model'
+import { NavigationProps } from '../common/Model';
 
 // utill
 import Router from '../util/Router';
 import LocalStorage from '../util/LocalStorage';
-import { NavigationProps } from '../common/Model';
+
+interface HomeScreenState {
+  userData: UserData;
+}
 
 class HomeScreen extends Component<NavigationProps, {}> {
   componentDidMount() {
-    LocalStorage.getItem(
-      this.fetchedLocalItem.bind(this)
-    );
+    LocalStorage.setUserDataListener(this.fetchedLocalItem.bind(this));
   }
-
-  fetchedLocalItem(error: Error, result: string) {
-    const userData: UserData = JSON.parse(result);
+  
+  fetchedLocalItem(result: UserData) {
+    const userData: UserData = result;
     console.log('HomeScreen User Data:', userData);
-    if (userData === null || userData.exerciseLevel === null) this.props.navigation.navigate(Router.SETTING);
+    if (userData.exerciseLevel === undefined) this.props.navigation.navigate(Router.SETTING);
+    else this.setState({...this.state, userData})
   }
 
   _onPressButton() {

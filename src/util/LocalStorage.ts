@@ -4,38 +4,48 @@ import { AsyncStorage } from 'react-native';
 import { UserData } from '../common/Model'
 
 class LocalStorage {
-  public KEY_exerciseLevel = 'exerciseLevel';
   public KEY_userData = 'userData'
   private userData: UserData;
+  private userDatalistener: (userData: UserData) => void;
 
   constructor() {
-    // 정보를 클리어 하고 세팅 화면부터 시작할 때 사용
-    // AsyncStorage.clear(this._fetchUserData.bind(this))
-    this._fetchUserData();
+    // 로컬 정보를 리셋 하고 세팅 화면부터 시작할 때
+    AsyncStorage.clear(this._fetchUserData.bind(this))
+    // 리셋 없이 저장된 정보를 쓸 때
+    // this._fetchUserData();
   }
 
-  private async _fetchUserData() {
+  public getUserData() {
+    return this.userData;
+  }
+
+  public setUserDataListener(userDatalistener: (userData: UserData) => void) {
+    this.userDatalistener = userDatalistener;
+  }
+
+  public async _fetchUserData() {
     await AsyncStorage.getItem(this.KEY_userData, this._callFetchedUserData.bind(this))
   }
 
   private _callFetchedUserData(error, result) {
+    // 저장된 정보가 없을 경우(처음 사용)
     if (result === null) {
-      console.log('fetched userdata no result :',result)
+      console.log('fetched userdata no result :', result)
       this.userData = new UserData();
       this.setItem(this.userData);
     } else {
-      console.log('fetched userdata :',result)
+      console.log('fetched userdata :', result)
       this.userData = JSON.parse(result);
     }
   }
 
-  public getUserData(){
-    return this.userData;
-  }
-
-  public async setItem(userData:UserData) {
+  public async setItem(userData: UserData) {
     try {
-      await AsyncStorage.mergeItem(this.KEY_userData, JSON.stringify(userData));
+      await AsyncStorage.mergeItem(this.KEY_userData, JSON.stringify(userData), () => {
+        this.userData = userData;
+        if (this.userDatalistener !== undefined) this.userDatalistener(userData);
+      });
+
     } catch (error) {
       console.log('set LocalStorage error:', error);
     }
