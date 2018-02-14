@@ -1,4 +1,5 @@
-export interface ExerciseItem {}
+
+import { ExerciseLevel } from './Model';
 
 class Exercise {
   Beginning: number[];
@@ -104,8 +105,10 @@ class Exercise {
     ];
   }
 
-  getExercisePlan() {
-    return this.Beginning;
+  getExercisePlan(level: number) {
+    if (level === ExerciseLevel.Beginning) return this.Beginning;
+    else if (level === ExerciseLevel.Intermediate) return this.Intermediate;
+    else if (level === ExerciseLevel.Advanced) return this.Advanced;
   }
 }
 

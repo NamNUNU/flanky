@@ -23,7 +23,7 @@ class SettingScreen extends Component<NavigationProps, SettingScreenState> {
     }
   }
 
-  onPressButton(level) {
+  onPressButton(level: number) {
     const userData = LocalStorage.getUserData();
     userData.exerciseLevel = level;
     LocalStorage.setItem(userData);

@@ -52,9 +52,11 @@ class LocalStorage {
     }
   }
 
-  public async getItem(func: (error: Error, result: string) => void) {
+  public async getItem(func: (userData:UserData) => void) {
     try {
-      await AsyncStorage.getItem(this.KEY_userData, func);
+      await AsyncStorage.getItem(this.KEY_userData, (error, result) => {
+        func(JSON.parse(result)) 
+      });
     } catch (error) {
       console.log('get LocalStorage error:', error);
     }

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 // model
 import Exercise from '../common/Exercise';
-import { NavigationProps } from '../common/Model';
+import { UserData, NavigationProps } from '../common/Model';
 
 // util
 import LocalStorage from '../util/LocalStorage';
@@ -13,6 +13,7 @@ interface ExerciseScreenState {
   isRunning: boolean;
   exercisePlan: number[];
   currentStep: number;
+  userData: UserData;
 }
 
 class ExerciseScreen extends Component<
@@ -27,13 +28,14 @@ class ExerciseScreen extends Component<
       second: 0,
       currentStep: 0,
       isRunning: false,
-      exercisePlan: Exercise.getExercisePlan()
     };
   }
 
   componentDidMount() {
-    LocalStorage.getItem((error, result) => {
-      console.log('ExerciseScreen User Data :', result)
+    LocalStorage.getItem((userData: UserData) => {
+      console.log('ExerciseScreen User Data :', userData);
+      const exercisePlan = Exercise.getExercisePlan(userData.exerciseLevel);
+      this.setState({ ...this.state, userData, exercisePlan });
     })
   }
 
@@ -67,9 +69,9 @@ class ExerciseScreen extends Component<
   }
 
   render() {
+    const { exercisePlan } = this.state;
     return (
       <View>
-
         <Text>{this.state.second}</Text>
         <TouchableOpacity onPress={this._onPressStartButton.bind(this)}>
           <Text>{this.state.isRunning ? 'Stop' : 'Start'}</Text>

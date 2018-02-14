@@ -4,20 +4,25 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 // model
 import { UserData } from '../common/Model'
 import { NavigationProps } from '../common/Model';
+import Exercise from '../common/Exercise';
 
 // utill
 import Router from '../util/Router';
 import LocalStorage from '../util/LocalStorage';
 
+// view
+import DayList from '../component/DayList';
+
 interface HomeScreenState {
   userData: UserData;
+  exercisePlan: number[];
 }
 
 class HomeScreen extends Component<NavigationProps, HomeScreenState> {
   constructor(props) {
     super(props)
     this.state = {
-      userData: undefined,
+      ...this.state,
     }
   }
   componentDidMount() {
@@ -25,11 +30,13 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
     LocalStorage.setUserDataListener(this.fetchedLocalItem.bind(this));
   }
 
-  fetchedLocalItem(result: UserData) {
-    const userData: UserData = result;
+  fetchedLocalItem(userData: UserData) {
     console.log('HomeScreen User Data:', userData);
     if (userData.exerciseLevel === undefined) this.props.navigation.navigate(Router.SETTING);
-    else this.setState({ ...this.state, userData })
+    else {
+      const exercisePlan = Exercise.getExercisePlan(userData.exerciseLevel);
+      this.setState({ ...this.state, userData, exercisePlan })
+    }
   }
 
   _onPressButton() {
@@ -37,6 +44,7 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
   }
 
   render() {
+    const { exercisePlan } = this.state;
     return (
       this.state.userData === undefined ?
         <View>
@@ -47,6 +55,9 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
         </View>
         :
         <View>
+          <DayList
+            exercisePlan = {exercisePlan}
+          />
           <Text>this is home view</Text>
           <TouchableOpacity onPress={this._onPressButton.bind(this)}>
             <Text>Exercise Start</Text>

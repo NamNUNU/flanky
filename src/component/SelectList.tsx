@@ -25,7 +25,7 @@ class SelectList extends React.Component<SelectListProps, {}> {
                         return (
                             <View key={index} style={styles.buttonView}>
                                 <Button
-                                    onPress={() => this.props.onPress(item)}
+                                    onPress={() => this.props.onPress(index)}
                                     title={item}
                                 />
                             </View>

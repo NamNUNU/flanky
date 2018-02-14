@@ -5,11 +5,17 @@ export interface NavigationProps {
 }
 
 export class UserData {
-    exerciseLevel: string;
+    exerciseLevel: number;
     step: number;
 
-    constructor(){
+    constructor() {
         this.exerciseLevel = undefined;
-        this.step= 0;
+        this.step = 0;
     }
+}
+
+export enum ExerciseLevel {
+    Beginning,
+    Intermediate,
+    Advanced,
 }
