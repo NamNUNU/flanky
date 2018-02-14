@@ -15,9 +15,10 @@ interface HomeScreenState {
 
 class HomeScreen extends Component<NavigationProps, {}> {
   componentDidMount() {
+    // 유저 정보가 바뀔때마다 정보를 업데이트 시켜주는 리스너 추가
     LocalStorage.setUserDataListener(this.fetchedLocalItem.bind(this));
   }
-  
+
   fetchedLocalItem(result: UserData) {
     const userData: UserData = result;
     console.log('HomeScreen User Data:', userData);

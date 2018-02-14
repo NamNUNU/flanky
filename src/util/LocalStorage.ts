@@ -43,6 +43,7 @@ class LocalStorage {
     try {
       await AsyncStorage.mergeItem(this.KEY_userData, JSON.stringify(userData), () => {
         this.userData = userData;
+        // 유저 정보가 바뀔때마다 등록된 리스너를 통해 홈 화면도 업데이트 시켜 줌
         if (this.userDatalistener !== undefined) this.userDatalistener(userData);
       });
 
