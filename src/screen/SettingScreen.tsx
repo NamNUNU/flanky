@@ -9,11 +9,15 @@ import { NavigationProps } from '../common/Model';
 // component
 import SelectList from '../component/SelectList';
 
+interface SettingScreenProps {
+  navigation: any;
+}
+
 interface SettingScreenState {
   selectListItem: string[];
 }
 
-class SettingScreen extends Component<NavigationProps, SettingScreenState> {
+class SettingScreen extends Component<SettingScreenProps, SettingScreenState> {
 
   constructor(props) {
     super(props);
@@ -24,12 +28,14 @@ class SettingScreen extends Component<NavigationProps, SettingScreenState> {
   }
 
   onPressButton(level) {
-    LocalStorage.setItem(LocalStorage.KEY_exerciseLevel, level);
-    this.props.navigation.goback();
+    const userData = LocalStorage.getUserData();
+    userData.exerciseLevel = level;
+    LocalStorage.setItem(userData);
+    this.props.navigation.goBack();
   }
 
   render() {
-    // console.log('this.props.navigation',this.props.navigation)
+    
     return (<View style={styles.container}>
       <SelectList
         title={'운동 수준을 선택해주세요'}

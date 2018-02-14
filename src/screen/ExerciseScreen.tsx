@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
+// model
 import Exercise from '../common/Exercise';
+
+// util
+import LocalStorage from '../util/LocalStorage';
 
 interface ExerciseScreenProps {
   navigation: any;
@@ -28,6 +32,12 @@ class ExerciseScreen extends Component<
       isRunning: false,
       exercisePlan: Exercise.getExercisePlan()
     };
+  }
+
+  componentDidMount() {
+    LocalStorage.getItem((error, result) => {
+      console.log('ExerciseScreen User Data :', result)
+    })
   }
 
   _onPressStartButton() {
