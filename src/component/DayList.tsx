@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,StatelessComponent } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 interface DayListPorps {
   exercisePlan: number[];
@@ -28,9 +28,6 @@ const styles = StyleSheet.create({
     backgroundColor :'blue',
     borderBottomColor: 'white',
     borderBottomWidth: 1,
-    // flex: 1,
-    // backgroundColor: 'white',
-    // justifyContent: 'center'
   },
 });
 
