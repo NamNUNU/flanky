@@ -10,6 +10,9 @@ import Exercise from '../common/Exercise';
 import Router from '../util/Router';
 import LocalStorage from '../util/LocalStorage';
 
+// component
+import ExercisePlanView from '../component/ExercisePlanView';
+
 interface HomeScreenState {
   userData: UserData;
   exercisePlan: number[];
@@ -59,21 +62,10 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
     ) : (
       <View style={styles.container}>
         <Text style={styles.title}>오늘의 운동</Text>
-        {/* TODO: 컴포넌트로 분리 */}
-        <View style={styles.planContainer}>
-          <View style={styles.planLeftBtn}>
-            <Text style={styles.leftBtnTxt}>{currentStep !== 0 && '<'}</Text>
-          </View>
-          <View style={styles.planText}>
-            <Text style={styles.dayTxt}>{currentStep + 1}</Text>
-            <Text style={styles.second}>{exercisePlan[currentStep]}</Text>
-          </View>
-          <View style={styles.planRightBtn}>
-            <Text style={styles.rightBtnTxt}>
-              {currentStep !== exercisePlan.length && '>'}
-            </Text>
-          </View>
-        </View>
+        <ExercisePlanView
+          exercisePlan={exercisePlan}
+          currentStep={this.state.userData.step}
+        />
         <TouchableOpacity
           style={styles.startBtn}
           onPress={this._onPressStartButton.bind(this)}
@@ -95,32 +87,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20
   },
-  // 운동 게획 화면
-  planContainer: {
-    flexDirection: 'row'
-  },
-  planLeftBtn: {
-    flex: 1
-  },
-  planRightBtn: {
-    flex: 1
-  },
-  planText: {
-    flex: 4
-  },
-  leftBtnTxt: {
-    textAlign: 'center'
-  },
-  rightBtnTxt: {
-    textAlign: 'center'
-  },
-  dayTxt: {
-    textAlign: 'center'
-  },
-  second: {
-    textAlign: 'center',
-    fontSize: 20,
-  },
+  
   // 스타트 버튼
   startBtn: {
     backgroundColor: '#0084dd',
