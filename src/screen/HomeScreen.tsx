@@ -10,9 +10,6 @@ import Exercise from '../common/Exercise';
 import Router from '../util/Router';
 import LocalStorage from '../util/LocalStorage';
 
-// view
-import DayList from '../component/DayList';
-
 interface HomeScreenState {
   userData: UserData;
   exercisePlan: number[];
@@ -39,12 +36,12 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
       const exercisePlan: number[] = Exercise.getExercisePlan(
         userData.exerciseLevel
       );
-      const currentStep: number = 1;
+      const currentStep: number = userData.step;
       this.setState({ ...this.state, currentStep, userData, exercisePlan });
     }
   }
 
-  _onPressButton() {
+  _onPressStartButton() {
     this.props.navigation.navigate(Router.EXERCISE);
   }
 
@@ -60,13 +57,15 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
         </TouchableOpacity>
       </View>
     ) : (
-      <View>
+      <View style={styles.container}>
+        <Text style={styles.title}>오늘의 운동</Text>
+        {/* TODO: 컴포넌트로 분리 */}
         <View style={styles.planContainer}>
           <View style={styles.planLeftBtn}>
             <Text style={styles.leftBtnTxt}>{currentStep !== 0 && '<'}</Text>
           </View>
           <View style={styles.planText}>
-            <Text style={styles.dayTxt}>{currentStep}</Text>
+            <Text style={styles.dayTxt}>{currentStep + 1}</Text>
             <Text style={styles.second}>{exercisePlan[currentStep]}</Text>
           </View>
           <View style={styles.planRightBtn}>
@@ -75,9 +74,11 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
             </Text>
           </View>
         </View>
-        <Text>this is home view</Text>
-        <TouchableOpacity onPress={this._onPressButton.bind(this)}>
-          <Text>Exercise Start</Text>
+        <TouchableOpacity
+          style={styles.startBtn}
+          onPress={this._onPressStartButton.bind(this)}
+        >
+          <Text style={styles.startBtnTxt}>Exercise Start</Text>
         </TouchableOpacity>
       </View>
     );
@@ -85,6 +86,16 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 20,
+    paddingHorizontal: 20
+  },
+  title: {
+    marginBottom: 20,
+    textAlign: 'center',
+    fontSize: 20
+  },
+  // 운동 게획 화면
   planContainer: {
     flexDirection: 'row'
   },
@@ -106,8 +117,20 @@ const styles = StyleSheet.create({
   dayTxt: {
     textAlign: 'center'
   },
-  second:{
-    textAlign: 'center'
+  second: {
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  // 스타트 버튼
+  startBtn: {
+    backgroundColor: '#0084dd',
+    borderRadius: 6,
+  },
+  startBtnTxt: {
+    textAlign:'center',
+    color: 'white',
+    paddingVertical: 10,
+    fontSize:30,
   }
 });
 
