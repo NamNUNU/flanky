@@ -9,34 +9,34 @@ import { UserData, NavigationProps } from '../common/Model';
 import LocalStorage from '../util/LocalStorage';
 
 interface ExerciseScreenState {
-  second: number;
+  seconds: number;
   isRunning: boolean;
   exercisePlan: number[];
   currentStep: number;
   userData: UserData;
 }
 
-class ExerciseScreen extends Component<
-  NavigationProps,
-  ExerciseScreenState
-  > {
-  stopwatch: number;
+class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
+  exerciseTimer: number;
+  
   constructor(props) {
     super(props);
     this.state = {
       ...this.state,
-      second: 0,
+      seconds: 0,
       currentStep: 0,
-      isRunning: false,
+      isRunning: false
     };
   }
 
   componentDidMount() {
     LocalStorage.getItem((userData: UserData) => {
       console.log('ExerciseScreen User Data :', userData);
-      const exercisePlan = Exercise.getExercisePlan(userData.exerciseLevel);
-      this.setState({ ...this.state, userData, exercisePlan });
-    })
+      let { exercisePlan, seconds } = this.state;
+      exercisePlan = Exercise.getExercisePlan(userData.exerciseLevel);
+      seconds = exercisePlan[userData.step];
+      this.setState({ ...this.state, seconds, userData, exercisePlan });
+    });
   }
 
   _onPressStartButton() {
@@ -47,24 +47,24 @@ class ExerciseScreen extends Component<
   }
 
   _onPressResetButton() {
-    clearInterval(this.stopwatch);
+    clearInterval(this.exerciseTimer);
     this.setState({
       ...this.state,
       isRunning: false,
-      second: 0
+      seconds: 0
     });
   }
 
   _onStartTime() {
     // 시계가 동작하지 않을 때 시작시킴
     if (this.state.isRunning) {
-      this.stopwatch = setInterval(() => {
-        const second = this.state.second + 1;
-        this.setState({ second });
+      this.exerciseTimer = setInterval(() => {
+        const seconds = this.state.seconds - 1;
+        this.setState({ seconds });
       }, 1000);
     } else {
       // 시계가 동작하고 있을 때 정지 시킴
-      clearInterval(this.stopwatch);
+      clearInterval(this.exerciseTimer);
     }
   }
 
@@ -72,9 +72,9 @@ class ExerciseScreen extends Component<
     const { exercisePlan } = this.state;
     return (
       <View>
-        <Text>{this.state.second}</Text>
+        <Text>{this.state.seconds}</Text>
         <TouchableOpacity onPress={this._onPressStartButton.bind(this)}>
-          <Text>{this.state.isRunning ? 'Stop' : 'Start'}</Text>
+          <Text>{this.state.isRunning ? 'Pause' : 'Start'}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={this._onPressResetButton.bind(this)}>
           <Text>Reset</Text>
