@@ -19,3 +19,8 @@ export enum ExerciseLevel {
     Intermediate,
     Advanced,
 }
+
+export enum ExerciseMode {
+    MODE_EXERCISE,
+    MODE_REST,
+}
