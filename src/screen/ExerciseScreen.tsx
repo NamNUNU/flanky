@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 // model
 import Exercise from '../common/Exercise';
 import { UserData, NavigationProps, ExerciseMode } from '../common/Model';
+import { CommonStyles } from '../common/CommonStyles';
 
 // util
 import LocalStorage from '../util/LocalStorage';
@@ -103,21 +104,55 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     );
   }
 
+  getTitleText(mode: number) {
+    if (mode === ExerciseMode.MODE_EXERCISE) {
+      return '운동 중입니다. 힘내세요';
+    } else if (mode === ExerciseMode.MODE_REST) {
+      return '휴식을 취하세요';
+    } else {
+      return '운동을 시작해볼까요';
+    }
+  }
+
   render() {
-    const { exercisePlan, mode, isRunning } = this.state;
+    const { exercisePlan, mode, seconds, isRunning } = this.state;
 
     return (
-      <View>
-        <Text>{this.state.seconds}</Text>
-        <TouchableOpacity onPress={this._onPressStartButton.bind(this)}>
-          <Text>{isRunning ? 'Pause' : 'Start'}</Text>
+      <View style={CommonStyles.container}>
+        <Text style={styles.mode}>{this.getTitleText(mode)}</Text>
+        <Text style={styles.second}>{seconds}</Text>
+        <TouchableOpacity
+          style={CommonStyles.blueBtn}
+          onPress={this._onPressStartButton.bind(this)}
+        >
+          <Text style={CommonStyles.blueBtnTxt}>
+            {isRunning ? 'Pause' : 'Start'}
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this._onPressResetButton.bind(this)}>
-          <Text>Reset</Text>
+        <TouchableOpacity
+          style={CommonStyles.blueBtn}
+          onPress={this._onPressResetButton.bind(this)}
+        >
+          <Text style={CommonStyles.blueBtnTxt}>Reset</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
 
+const styles = StyleSheet.create({
+  mode: {
+    marginBottom: 30,
+    textAlign: 'center',
+    fontSize: 30
+  },
+  second: {
+    marginBottom: 20,
+    textAlign: 'center',
+    fontSize: 20
+  }
+});
+
 export default ExerciseScreen;
+
+// TODO: 디자인 및. 5개의 운동 칸 표기

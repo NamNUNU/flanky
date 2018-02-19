@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-// model
+// common
+import Exercise from '../common/Exercise';
 import { UserData } from '../common/Model';
 import { NavigationProps } from '../common/Model';
-import Exercise from '../common/Exercise';
+import { CommonStyles } from '../common/CommonStyles';
 
 // utill
 import Router from '../util/Router';
@@ -60,17 +61,17 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
         </TouchableOpacity>
       </View>
     ) : (
-      <View style={styles.container}>
+      <View style={CommonStyles.container}>
         <Text style={styles.title}>오늘의 운동</Text>
         <ExercisePlanView
           exercisePlan={exercisePlan}
           currentStep={this.state.userData.step}
         />
         <TouchableOpacity
-          style={styles.startBtn}
+          style={CommonStyles.blueBtn}
           onPress={this._onPressStartButton.bind(this)}
         >
-          <Text style={styles.startBtnTxt}>Exercise Start</Text>
+          <Text style={CommonStyles.blueBtnTxt}>Exercise Start</Text>
         </TouchableOpacity>
       </View>
     );
@@ -78,27 +79,11 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 20,
-    paddingHorizontal: 20
-  },
   title: {
     marginBottom: 20,
     textAlign: 'center',
     fontSize: 20
   },
-  
-  // 스타트 버튼
-  startBtn: {
-    backgroundColor: '#0084dd',
-    borderRadius: 6,
-  },
-  startBtnTxt: {
-    textAlign:'center',
-    color: 'white',
-    paddingVertical: 10,
-    fontSize:30,
-  }
 });
 
 export default HomeScreen;
