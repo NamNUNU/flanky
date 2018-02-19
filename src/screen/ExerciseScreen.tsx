@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 // model
 import Exercise from '../common/Exercise';
@@ -115,12 +116,31 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
   }
 
   render() {
-    const { exercisePlan, mode, seconds, isRunning } = this.state;
+    const { exercisePlan, mode, seconds, isRunning, userData } = this.state;
 
     return (
       <View style={CommonStyles.container}>
         <Text style={styles.mode}>{this.getTitleText(mode)}</Text>
-        <Text style={styles.second}>{seconds}</Text>
+        {userData && (
+          <View style={styles.counter}>
+            <AnimatedCircularProgress
+              size={120}
+              width={10}
+              fill={
+                mode === ExerciseMode.MODE_REST
+                  ? seconds / (exercisePlan[userData.step] / 2) * 100
+                  : seconds / exercisePlan[userData.step] * 100
+              }
+              tintColor="#00e0ff"
+              onAnimationComplete={() => console.log('onAnimationComplete')}
+              backgroundColor="#3d5875"
+            >
+              {() => {
+                return <Text style={styles.second}>{seconds}</Text>;
+              }}
+            </AnimatedCircularProgress>
+          </View>
+        )}
         <TouchableOpacity
           style={CommonStyles.blueBtn}
           onPress={this._onPressStartButton.bind(this)}
@@ -141,15 +161,17 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 }
 
 const styles = StyleSheet.create({
+  counter: {
+    alignItems: 'center',
+  },
   mode: {
     marginBottom: 30,
     textAlign: 'center',
     fontSize: 30
   },
   second: {
-    marginBottom: 20,
     textAlign: 'center',
-    fontSize: 20
+    fontSize: 24
   }
 });
 

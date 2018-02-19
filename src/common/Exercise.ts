@@ -8,7 +8,7 @@ class Exercise {
 
   constructor() {
     this.Beginning = [
-      2,
+      20,
       20,
       30,
       30,
