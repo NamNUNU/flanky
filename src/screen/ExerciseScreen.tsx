@@ -120,25 +120,34 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
     return (
       <View style={CommonStyles.container}>
-        <Text style={styles.mode}>{this.getTitleText(mode)}</Text>
         {userData && (
-          <View style={styles.counter}>
-            <AnimatedCircularProgress
-              size={120}
-              width={10}
-              fill={
-                mode === ExerciseMode.MODE_REST
-                  ? seconds / (exercisePlan[userData.step] / 2) * 100
-                  : seconds / exercisePlan[userData.step] * 100
-              }
-              tintColor="#00e0ff"
-              onAnimationComplete={() => console.log('onAnimationComplete')}
-              backgroundColor="#3d5875"
-            >
-              {() => {
-                return <Text style={styles.second}>{seconds}</Text>;
-              }}
-            </AnimatedCircularProgress>
+          <View>
+            <View>
+              <Text>{exercisePlan[userData.step]}</Text>
+              <Text>R</Text>
+              <Text>{exercisePlan[userData.step]}</Text>
+              <Text>R</Text>
+              <Text>{exercisePlan[userData.step]}</Text>
+            </View>
+            <Text style={styles.mode}>{this.getTitleText(mode)}</Text>
+            <View style={styles.counter}>
+              <AnimatedCircularProgress
+                size={120}
+                width={10}
+                fill={
+                  mode === ExerciseMode.MODE_REST
+                    ? seconds / (exercisePlan[userData.step] / 2) * 100
+                    : seconds / exercisePlan[userData.step] * 100
+                }
+                tintColor="#00e0ff"
+                onAnimationComplete={() => console.log('onAnimationComplete')}
+                backgroundColor="#3d5875"
+              >
+                {() => {
+                  return <Text style={styles.second}>{seconds}</Text>;
+                }}
+              </AnimatedCircularProgress>
+            </View>
           </View>
         )}
         <TouchableOpacity
@@ -162,7 +171,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
 const styles = StyleSheet.create({
   counter: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   mode: {
     marginBottom: 30,
