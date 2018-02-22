@@ -20,7 +20,7 @@ interface ExerciseScreenState {
   currentStep: number;
 
   mode: number;
-  seconds: number;
+  timerSeconds: number;
   isRunning: boolean;
 }
 
@@ -31,7 +31,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     super(props);
     this.state = {
       ...this.state,
-      seconds: 0,
+      timerSeconds: 0,
       currentStep: 0,
       isRunning: false
     };
@@ -40,10 +40,10 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
   componentDidMount() {
     LocalStorage.getItem((userData: UserData) => {
       console.log('ExerciseScreen User Data :', userData);
-      let { exercisePlan, seconds } = this.state;
+      let { exercisePlan, timerSeconds } = this.state;
       exercisePlan = Exercise.getExercisePlan(userData.exerciseLevel);
-      seconds = exercisePlan[userData.step];
-      this.setState({ ...this.state, seconds, userData, exercisePlan });
+      timerSeconds = exercisePlan[userData.step];
+      this.setState({ ...this.state, timerSeconds, userData, exercisePlan });
     });
   }
 
@@ -63,10 +63,15 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
   // 리셋 버튼 클릭시
   _onPressResetButton() {
     clearInterval(this.exerciseTimer);
+    const { exercisePlan, userData } = this.state;
+    const timerSeconds =
+      this.state.mode === ExerciseMode.MODE_REST
+        ? exercisePlan[userData.step] / 2
+        : exercisePlan[userData.step];
     this.setState({
       ...this.state,
       isRunning: false,
-      seconds: this.state.exercisePlan[this.state.userData.step]
+      timerSeconds
     });
   }
 
@@ -75,8 +80,8 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     // 시계가 동작하지 않을 때 시작시킴
     if (this.state.isRunning) {
       this.exerciseTimer = setInterval(() => {
-        const seconds = this.state.seconds - 1;
-        seconds < 0 ? this._timeOut() : this.setState({ seconds });
+        const timerSeconds = this.state.timerSeconds - 1;
+        timerSeconds < 0 ? this._timeOut() : this.setState({ timerSeconds });
       }, 1000);
     } else {
       // 시계가 동작하고 있을 때 정지 시킴
@@ -88,21 +93,21 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
   _timeOut() {
     clearInterval(this.exerciseTimer);
     const { exercisePlan, userData, currentStep } = this.state;
-    let seconds, mode;
+    let timerSeconds, mode;
     if (this.state.mode === ExerciseMode.MODE_EXERCISE) {
-      seconds = exercisePlan[userData.step] / 2;
+      timerSeconds = exercisePlan[userData.step] / 2;
       mode = ExerciseMode.MODE_REST;
-      console.log('exercise seconds:', seconds);
+      console.log('exercise timerSeconds:', timerSeconds);
     } else if (this.state.mode === ExerciseMode.MODE_REST) {
-      seconds = exercisePlan[userData.step];
+      timerSeconds = exercisePlan[userData.step];
       mode = ExerciseMode.MODE_EXERCISE;
-      console.log('rest seconds:', seconds);
+      console.log('rest timerSeconds:', timerSeconds);
     }
     this.setState(
       {
         ...this.state,
         currentStep: currentStep + 1,
-        seconds,
+        timerSeconds,
         mode
       },
       this._onStartTime.bind(this)
@@ -127,7 +132,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     const {
       exercisePlan,
       mode,
-      seconds,
+      timerSeconds,
       isRunning,
       userData,
       currentStep
@@ -150,7 +155,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
             <View style={styles.counter}>
               <ExerciseTimer
                 flankTime={exercisePlan[userData.step]}
-                seconds={seconds}
+                timerSeconds={timerSeconds}
                 mode={mode}
               />
             </View>
