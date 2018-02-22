@@ -34,9 +34,9 @@ class ExerciseHeader extends Component<
       <View>
         {this.state.flankTimeList.map((item, index) => {
           return item < 0 ? (
-            <Text>R</Text>
+            <Text key={index}>R</Text>
           ) : (
-            <Text>{this.props.flankTime}</Text>
+            <Text key={index}>{this.props.flankTime}</Text>
           );
         })}
       </View>

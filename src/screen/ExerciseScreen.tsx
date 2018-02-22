@@ -12,6 +12,7 @@ import LocalStorage from '../util/LocalStorage';
 
 // view
 import ExerciseHeader from '../component/ExerciseHeader';
+import ExerciseTimer from '../component/ExerciseTimer';
 
 interface ExerciseScreenState {
   userData: UserData;
@@ -133,22 +134,11 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
             </View>
             <Text style={styles.mode}>{this.getTitleText(mode)}</Text>
             <View style={styles.counter}>
-              <AnimatedCircularProgress
-                size={120}
-                width={10}
-                fill={
-                  mode === ExerciseMode.MODE_REST
-                    ? seconds / (exercisePlan[userData.step] / 2) * 100
-                    : seconds / exercisePlan[userData.step] * 100
-                }
-                tintColor="#00e0ff"
-                onAnimationComplete={() => console.log('onAnimationComplete')}
-                backgroundColor="#3d5875"
-              >
-                {() => {
-                  return <Text style={styles.second}>{seconds}</Text>;
-                }}
-              </AnimatedCircularProgress>
+            <ExerciseTimer
+              flankTime={exercisePlan[userData.step]}
+              seconds={seconds}
+              mode={mode}
+            />
             </View>
           </View>
         )}
@@ -180,10 +170,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30
   },
-  second: {
-    textAlign: 'center',
-    fontSize: 24
-  }
 });
 
 export default ExerciseScreen;
