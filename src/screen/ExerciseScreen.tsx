@@ -10,6 +10,9 @@ import { CommonStyles } from '../common/CommonStyles';
 // util
 import LocalStorage from '../util/LocalStorage';
 
+// view
+import ExerciseHeader from '../component/ExerciseHeader';
+
 interface ExerciseScreenState {
   userData: UserData;
   exercisePlan: number[];
@@ -123,11 +126,10 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
         {userData && (
           <View>
             <View>
-              <Text>{exercisePlan[userData.step]}</Text>
-              <Text>R</Text>
-              <Text>{exercisePlan[userData.step]}</Text>
-              <Text>R</Text>
-              <Text>{exercisePlan[userData.step]}</Text>
+              <ExerciseHeader
+                flankTime={exercisePlan[userData.step]}
+                step={userData.step}
+              />
             </View>
             <Text style={styles.mode}>{this.getTitleText(mode)}</Text>
             <View style={styles.counter}>
