@@ -119,8 +119,19 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     }
   }
 
+  onClickHeaderTimeListBtn(index: number) {
+    this.setState({ ...this.state, currentStep: index });
+  }
+
   render() {
-    const { exercisePlan, mode, seconds, isRunning, userData } = this.state;
+    const {
+      exercisePlan,
+      mode,
+      seconds,
+      isRunning,
+      userData,
+      currentStep
+    } = this.state;
 
     return (
       <View style={CommonStyles.container}>
@@ -129,16 +140,19 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
             <View>
               <ExerciseHeader
                 flankTime={exercisePlan[userData.step]}
-                step={userData.step}
+                currentStep={currentStep}
+                onClickHeaderTimeListBtn={this.onClickHeaderTimeListBtn.bind(
+                  this
+                )}
               />
             </View>
             <Text style={styles.mode}>{this.getTitleText(mode)}</Text>
             <View style={styles.counter}>
-            <ExerciseTimer
-              flankTime={exercisePlan[userData.step]}
-              seconds={seconds}
-              mode={mode}
-            />
+              <ExerciseTimer
+                flankTime={exercisePlan[userData.step]}
+                seconds={seconds}
+                mode={mode}
+              />
             </View>
           </View>
         )}
@@ -169,7 +183,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     textAlign: 'center',
     fontSize: 30
-  },
+  }
 });
 
 export default ExerciseScreen;
