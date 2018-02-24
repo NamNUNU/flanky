@@ -105,6 +105,7 @@ class Exercise {
     ];
   }
 
+  // 유저가 선택한 레벨에 맞는 30일 운동 계획을 가져옴
   getExercisePlan(level: number) {
     if (level === ExerciseLevel.Beginning) return this.Beginning;
     else if (level === ExerciseLevel.Intermediate) return this.Intermediate;

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 interface ExerciseHeaderProps {
-  flankTime: number;
-  currentStep: number;
+  todaySeconds: number;
+  currentOrder: number;
   onClickHeaderTimeListBtn: (index: number) => void;
 }
 
@@ -19,19 +19,18 @@ class ExerciseHeader extends Component<
     super(props);
     this.state = {
       flankTimeList: [
-        this.props.flankTime,
+        this.props.todaySeconds,
         -1,
-        this.props.flankTime,
+        this.props.todaySeconds,
         -1,
-        this.props.flankTime
+        this.props.todaySeconds
       ]
     };
   }
 
-  componentWillReceiveProps() {}
 
   render() {
-    const { currentStep } = this.props;
+    const { currentOrder } = this.props;
     return (
       <View style={styles.exerciseHeader}>
         {this.state.flankTimeList.map((item, index) => {
@@ -45,10 +44,10 @@ class ExerciseHeader extends Component<
                 <Text
                   style={[
                     styles.flankTimeText,
-                    currentStep === index && styles.currentStep
+                    currentOrder === index && styles.currentOrder
                   ]}
                 >
-                  {item < 0 ? 'R' : this.props.flankTime}
+                  {item < 0 ? 'R' : this.props.todaySeconds}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 16
   },
-  currentStep: {
+  currentOrder: {
     backgroundColor: '#eccbd9',
     overflow: 'hidden'
   }

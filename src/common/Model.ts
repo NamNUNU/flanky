@@ -6,11 +6,11 @@ export interface NavigationProps {
 
 export class UserData {
     exerciseLevel: number;
-    step: number;
+    todayStep: number;
 
     constructor() {
         this.exerciseLevel = undefined;
-        this.step = 0;
+        this.todayStep = 0;
     }
 }
 

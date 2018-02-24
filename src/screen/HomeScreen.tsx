@@ -40,7 +40,7 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
       const exercisePlan: number[] = Exercise.getExercisePlan(
         userData.exerciseLevel
       );
-      const currentStep: number = userData.step;
+      const currentStep: number = userData.todayStep;
       this.setState({ ...this.state, currentStep, userData, exercisePlan });
     }
   }
@@ -65,7 +65,7 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
         <Text style={styles.title}>오늘의 운동</Text>
         <ExercisePlanView
           exercisePlan={exercisePlan}
-          currentStep={this.state.userData.step}
+          currentStep={this.state.userData.todayStep}
         />
         <TouchableOpacity
           style={CommonStyles.blueBtn}

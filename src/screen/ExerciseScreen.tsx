@@ -16,11 +16,13 @@ import ExerciseTimer from '../component/ExerciseTimer';
 
 interface ExerciseScreenState {
   userData: UserData;
-  exercisePlan: number[];
-  currentStep: number;
+
+  flackTimeList: number[];
+  currentOrder: number;
+  currentSeconds: number;
 
   mode: number;
-  timerSeconds: number;
+
   isRunning: boolean;
 }
 
@@ -31,87 +33,80 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     super(props);
     this.state = {
       ...this.state,
-      timerSeconds: 0,
-      currentStep: 0,
+      currentOrder: 0,
+      currentSeconds: 0,
       isRunning: false
     };
   }
 
   componentDidMount() {
+    // 유저 데이터를 가져옴
     LocalStorage.getItem((userData: UserData) => {
       console.log('ExerciseScreen User Data :', userData);
-      let { exercisePlan, timerSeconds } = this.state;
-      exercisePlan = Exercise.getExercisePlan(userData.exerciseLevel);
-      timerSeconds = exercisePlan[userData.step];
-      this.setState({ ...this.state, timerSeconds, userData, exercisePlan });
+      this.setState({
+        ...this.state,
+        userData,
+        currentSeconds: this.getTodaySeconds(userData)
+      });
     });
+  }
+
+  // 현재 모드에 따라 운동/휴식 시간을 반환
+  getTodaySeconds(userData: UserData) {
+    const totalExercisePlan = Exercise.getExercisePlan(userData.exerciseLevel);
+    return this.state.mode === ExerciseMode.MODE_REST
+      ? totalExercisePlan[userData.todayStep] / 2 // 휴식은 운동 시간의 절반
+      : totalExercisePlan[userData.todayStep];
   }
 
   // 시작 버튼 클릭 시
   _onPressStartButton() {
-    let { isRunning, mode } = this.state;
-    // 제일 처음 진입시 mode를 운동 모드로 변경
-    if (mode === undefined) {
-      mode = ExerciseMode.MODE_EXERCISE;
-    }
-    this.setState(
-      { isRunning: !isRunning, mode },
-      this._onStartTime.bind(this)
-    );
-  }
-
-  // 리셋 버튼 클릭시
-  _onPressResetButton() {
-    clearInterval(this.exerciseTimer);
-    const { exercisePlan, userData } = this.state;
-    const timerSeconds =
-      this.state.mode === ExerciseMode.MODE_REST
-        ? exercisePlan[userData.step] / 2
-        : exercisePlan[userData.step];
-    this.setState({
-      ...this.state,
-      isRunning: false,
-      timerSeconds
-    });
-  }
-
-  // 타이머 동작
-  _onStartTime() {
+    let { isRunning } = this.state;
     // 시계가 동작하지 않을 때 시작시킴
-    if (this.state.isRunning) {
+    if (!isRunning) {
       this.exerciseTimer = setInterval(() => {
-        const timerSeconds = this.state.timerSeconds - 1;
-        timerSeconds < 0 ? this._timeOut() : this.setState({ timerSeconds });
+        const currentSeconds = this.state.currentSeconds - 1;
+        currentSeconds < 0
+          ? this._timeOut()
+          : this.setState({ currentSeconds });
       }, 1000);
     } else {
       // 시계가 동작하고 있을 때 정지 시킴
       clearInterval(this.exerciseTimer);
     }
+    this.setState({ isRunning: !isRunning });
+  }
+
+  // 리셋 버튼 클릭시
+  _onPressResetButton() {
+    clearInterval(this.exerciseTimer);
+    const { userData } = this.state;
+    const currentSeconds = this.getTodaySeconds(userData);
+    this.setState({
+      ...this.state,
+      isRunning: false,
+      currentSeconds
+    });
   }
 
   // 시간이 다되었을 때
   _timeOut() {
+    const mode =
+      this.state.mode === ExerciseMode.MODE_EXERCISE
+        ? ExerciseMode.MODE_REST
+        : ExerciseMode.MODE_EXERCISE;
     clearInterval(this.exerciseTimer);
-    const { exercisePlan, userData, currentStep } = this.state;
-    let timerSeconds, mode;
-    if (this.state.mode === ExerciseMode.MODE_EXERCISE) {
-      timerSeconds = exercisePlan[userData.step] / 2;
-      mode = ExerciseMode.MODE_REST;
-      console.log('exercise timerSeconds:', timerSeconds);
-    } else if (this.state.mode === ExerciseMode.MODE_REST) {
-      timerSeconds = exercisePlan[userData.step];
-      mode = ExerciseMode.MODE_EXERCISE;
-      console.log('rest timerSeconds:', timerSeconds);
-    }
-    this.setState(
-      {
-        ...this.state,
-        currentStep: currentStep + 1,
-        timerSeconds,
-        mode
-      },
-      this._onStartTime.bind(this)
-    );
+    const { userData, currentOrder } = this.state;
+    const currentSeconds = this.getTodaySeconds(userData);
+
+    console.log('timerSeconds:', currentSeconds);
+
+    this.setState({
+      ...this.state,
+      currentOrder: currentOrder + 1,
+      currentSeconds,
+      mode
+    });
   }
 
   getTitleText(mode: number) {
@@ -125,17 +120,19 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
   }
 
   onClickHeaderTimeListBtn(index: number) {
-    this.setState({ ...this.state, currentStep: index });
+    this.setState(
+      { ...this.state, currentOrder: index },
+      this._onPressResetButton.bind(this)
+    );
   }
 
   render() {
     const {
-      exercisePlan,
       mode,
-      timerSeconds,
+      currentSeconds,
       isRunning,
       userData,
-      currentStep
+      currentOrder
     } = this.state;
 
     return (
@@ -144,8 +141,8 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
           <View>
             <View>
               <ExerciseHeader
-                flankTime={exercisePlan[userData.step]}
-                currentStep={currentStep}
+                todaySeconds={this.getTodaySeconds(userData)}
+                currentOrder={currentOrder}
                 onClickHeaderTimeListBtn={this.onClickHeaderTimeListBtn.bind(
                   this
                 )}
@@ -154,8 +151,8 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
             <Text style={styles.mode}>{this.getTitleText(mode)}</Text>
             <View style={styles.counter}>
               <ExerciseTimer
-                flankTime={exercisePlan[userData.step]}
-                timerSeconds={timerSeconds}
+                todaySeconds={this.getTodaySeconds(userData)}
+                currentSeconds={currentSeconds}
                 mode={mode}
               />
             </View>
@@ -192,5 +189,3 @@ const styles = StyleSheet.create({
 });
 
 export default ExerciseScreen;
-
-// TODO: 디자인 및. 5개의 운동 칸 표기
