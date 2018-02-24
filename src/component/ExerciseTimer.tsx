@@ -8,6 +8,7 @@ import { UserData, NavigationProps, ExerciseMode } from '../common/Model';
 interface ExerciseTimerProps {
   todaySeconds: number;
   currentSeconds: number;
+  isStart: boolean;
 }
 
 class ExerciseTimer extends Component<ExerciseTimerProps, {}> {
@@ -17,6 +18,13 @@ class ExerciseTimer extends Component<ExerciseTimerProps, {}> {
     if (remainTimeRate > 50) return '#00e0ff';
     else if (remainTimeRate > 20) return '#fb8b24';
     else return '#d90368';
+  }
+
+  getTimerText() {
+    const { todaySeconds, currentSeconds, isStart } = this.props;
+    if (todaySeconds === currentSeconds)
+      return isStart ? 'Start' : 'Rest';
+    else return currentSeconds;
   }
 
   render() {
@@ -34,7 +42,7 @@ class ExerciseTimer extends Component<ExerciseTimerProps, {}> {
         backgroundColor="#3d5875"
       >
         {() => {
-          return <Text style={styles.second}>{currentSeconds}</Text>;
+          return <Text style={styles.second}>{this.getTimerText()}</Text>;
         }}
       </AnimatedCircularProgress>
     );

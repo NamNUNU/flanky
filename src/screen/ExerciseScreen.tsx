@@ -125,6 +125,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
   }
 
   getTitleText() {
+    if (!this.state.isRunning) return '운동을 시작해볼까요?';
     return this.state.currentOrder % 2 === this.ORDER_EXERCISE
       ? '운동 중입니다. 힘내세요'
       : '휴식을 취하세요';
@@ -165,6 +166,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
               <ExerciseTimer
                 todaySeconds={goalSeconds}
                 currentSeconds={currentSeconds}
+                isStart={(!isRunning && !isExerciseMode) || isExerciseMode}
               />
             </View>
           </View>
