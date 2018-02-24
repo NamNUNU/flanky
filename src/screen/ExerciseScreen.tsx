@@ -21,13 +21,13 @@ interface ExerciseScreenState {
   currentOrder: number;
   currentSeconds: number;
 
-  mode: number;
-
+  isExerciseMode: boolean;
   isRunning: boolean;
 }
 
 class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
   exerciseTimer: number;
+  todaySeconds: number;
 
   constructor(props) {
     super(props);
@@ -35,7 +35,8 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
       ...this.state,
       currentOrder: 0,
       currentSeconds: 0,
-      isRunning: false
+      isRunning: false,
+      isExerciseMode: false
     };
   }
 
@@ -43,20 +44,20 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     // 유저 데이터를 가져옴
     LocalStorage.getItem((userData: UserData) => {
       console.log('ExerciseScreen User Data :', userData);
+      this.todaySeconds = Exercise.getExercisePlan(userData.exerciseLevel)[
+        userData.todayStep
+      ];
       this.setState({
         ...this.state,
         userData,
-        currentSeconds: this.getTodaySeconds(userData)
+        currentSeconds: this.todaySeconds
       });
     });
   }
 
   // 현재 모드에 따라 운동/휴식 시간을 반환
-  getTodaySeconds(userData: UserData) {
-    const totalExercisePlan = Exercise.getExercisePlan(userData.exerciseLevel);
-    return this.state.mode === ExerciseMode.MODE_REST
-      ? totalExercisePlan[userData.todayStep] / 2 // 휴식은 운동 시간의 절반
-      : totalExercisePlan[userData.todayStep];
+  getTodaySeconds(currentOrder: number) {
+    return currentOrder % 2 === 0 ? this.todaySeconds : this.todaySeconds / 2; // 휴식은 운동 시간의 절반
   }
 
   // 시작 버튼 클릭 시
@@ -80,8 +81,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
   // 리셋 버튼 클릭시
   _onPressResetButton() {
     clearInterval(this.exerciseTimer);
-    const { userData } = this.state;
-    const currentSeconds = this.getTodaySeconds(userData);
+    const currentSeconds = this.getTodaySeconds(this.state.currentOrder);
     this.setState({
       ...this.state,
       isRunning: false,
@@ -91,32 +91,26 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
   // 시간이 다되었을 때
   _timeOut() {
-    const mode =
-      this.state.mode === ExerciseMode.MODE_EXERCISE
-        ? ExerciseMode.MODE_REST
-        : ExerciseMode.MODE_EXERCISE;
+    const isExerciseMode = !this.state.isExerciseMode;
     clearInterval(this.exerciseTimer);
-    const { userData, currentOrder } = this.state;
-    const currentSeconds = this.getTodaySeconds(userData);
+    let currentOrder = this.state.currentOrder + 1;
+    const currentSeconds = this.getTodaySeconds(currentOrder);
 
     console.log('timerSeconds:', currentSeconds);
 
     this.setState({
       ...this.state,
-      currentOrder: currentOrder + 1,
+      currentOrder,
       currentSeconds,
-      mode
-    });
+      isExerciseMode
+    },this._onPressResetButton.bind(this));
   }
 
-  getTitleText(mode: number) {
-    if (mode === ExerciseMode.MODE_EXERCISE) {
-      return '운동 중입니다. 힘내세요';
-    } else if (mode === ExerciseMode.MODE_REST) {
-      return '휴식을 취하세요';
-    } else {
-      return '운동을 시작해볼까요';
-    }
+  getTitleText() {
+    if (!this.state.isRunning) return '운동을 시작해볼까요';
+    return this.state.isExerciseMode
+      ? '운동 중입니다. 힘내세요'
+      : '휴식을 취하세요';
   }
 
   onClickHeaderTimeListBtn(index: number) {
@@ -128,7 +122,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
   render() {
     const {
-      mode,
+      isExerciseMode,
       currentSeconds,
       isRunning,
       userData,
@@ -141,19 +135,18 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
           <View>
             <View>
               <ExerciseHeader
-                todaySeconds={this.getTodaySeconds(userData)}
+                todaySeconds={this.todaySeconds}
                 currentOrder={currentOrder}
                 onClickHeaderTimeListBtn={this.onClickHeaderTimeListBtn.bind(
                   this
                 )}
               />
             </View>
-            <Text style={styles.mode}>{this.getTitleText(mode)}</Text>
+            <Text style={styles.mode}>{this.getTitleText()}</Text>
             <View style={styles.counter}>
               <ExerciseTimer
-                todaySeconds={this.getTodaySeconds(userData)}
+                todaySeconds={this.getTodaySeconds(this.state.currentOrder)}
                 currentSeconds={currentSeconds}
-                mode={mode}
               />
             </View>
           </View>
