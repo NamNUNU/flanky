@@ -22,8 +22,6 @@ class ExerciseTimer extends Component<ExerciseTimerProps, {}> {
   render() {
     const { todaySeconds, currentSeconds } = this.props;
 
-    console.log('currentSeconds', currentSeconds);
-    console.log('todaySeconds', todaySeconds);
     return (
       <AnimatedCircularProgress
         size={120}
