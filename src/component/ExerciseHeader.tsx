@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 interface ExerciseHeaderProps {
   todaySeconds: number;
   currentOrder: number;
-  onClickHeaderTimeListBtn: (index: number) => void;
 }
 
 interface ExerciseHeaderState {
@@ -28,29 +27,22 @@ class ExerciseHeader extends Component<
     };
   }
 
-
   render() {
     const { currentOrder } = this.props;
     return (
       <View style={styles.exerciseHeader}>
         {this.state.flankTimeList.map((item, index) => {
           return (
-            <TouchableOpacity
-              key={index}
-              onPress={() => this.props.onClickHeaderTimeListBtn(index)}
-              style={styles.flankTimebox}
-            >
-              <View>
-                <Text
-                  style={[
-                    styles.flankTimeText,
-                    currentOrder === index && styles.currentOrder
-                  ]}
-                >
-                  {item < 0 ? 'R' : this.props.todaySeconds}
-                </Text>
-              </View>
-            </TouchableOpacity>
+            <View key={index} style={styles.flankTimebox}>
+              <Text
+                style={[
+                  styles.flankTimeText,
+                  currentOrder === index && styles.currentOrder
+                ]}
+              >
+                {item < 0 ? 'R' : this.props.todaySeconds}
+              </Text>
+            </View>
           );
         })}
       </View>

@@ -9,6 +9,7 @@ import Router from './util/Router';
 import HomeScreen from './screen/HomeScreen';
 import SettingScreen from './screen/SettingScreen';
 import ExerciseScreen from './screen/ExerciseScreen';
+import FinishScreen from './screen/FinishScreen';
 
 const RootStack = StackNavigator(
   {
@@ -20,6 +21,9 @@ const RootStack = StackNavigator(
     },
     Exercise: {
       screen: ExerciseScreen,
+    },
+    Finish: {
+      screen: FinishScreen,
     },
   },
   {

@@ -9,6 +9,7 @@ import { CommonStyles } from '../common/CommonStyles';
 
 // util
 import LocalStorage from '../util/LocalStorage';
+import Router from '../util/Router';
 
 // view
 import ExerciseHeader from '../component/ExerciseHeader';
@@ -104,6 +105,10 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
     clearInterval(this.exerciseTimer);
 
+    if (currentOrder > 4) {
+      return this.props.navigation.navigate(Router.FINISH);
+    }
+
     this.setState(
       {
         ...this.state,
@@ -156,9 +161,6 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
               <ExerciseHeader
                 todaySeconds={this.todaySeconds}
                 currentOrder={currentOrder}
-                onClickHeaderTimeListBtn={this.onClickHeaderTimeListBtn.bind(
-                  this
-                )}
               />
             </View>
             <Text style={styles.mode}>{this.getTitleText()}</Text>
@@ -171,18 +173,21 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
             </View>
           </View>
         )}
-        <TouchableOpacity
-          style={CommonStyles.blueBtn}
-          onPress={this._onPressStartButton.bind(this)}
-        >
-          {!isRunning && <Text style={CommonStyles.blueBtnTxt}>{'Start'}</Text>}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={CommonStyles.blueBtn}
-          onPress={this._onPressAddSeconds.bind(this)}
-        >
-          <Text style={CommonStyles.blueBtnTxt}>+10 seconds</Text>
-        </TouchableOpacity>
+        {!isRunning ? (
+          <TouchableOpacity
+            style={CommonStyles.blueBtn}
+            onPress={this._onPressStartButton.bind(this)}
+          >
+            <Text style={CommonStyles.blueBtnTxt}>{'Start'}</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={CommonStyles.blueBtn}
+            onPress={this._onPressAddSeconds.bind(this)}
+          >
+            <Text style={CommonStyles.blueBtnTxt}>+10 seconds</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
