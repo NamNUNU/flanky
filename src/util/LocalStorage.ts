@@ -1,10 +1,10 @@
 import { AsyncStorage } from 'react-native';
 
 // model
-import { UserData } from '../common/Model'
+import { UserData } from '../common/Model';
 
 class LocalStorage {
-  public KEY_userData = 'userData'
+  public KEY_userData = 'userData';
   private userData: UserData;
   private userDatalistener: (userData: UserData) => void;
 
@@ -15,54 +15,77 @@ class LocalStorage {
     // this._fetchUserData();
   }
 
-  public getUserData() {
-    return this.userData;
-  }
-
-  public setUserDataListener(userDatalistener: (userData: UserData) => void) {
-    this.userDatalistener = userDatalistener;
-  }
-
   public async _fetchUserData() {
-    await AsyncStorage.getItem(this.KEY_userData, this._callFetchedUserData.bind(this))
+    await AsyncStorage.getItem(
+      this.KEY_userData,
+      this._callFetchedUserData.bind(this)
+    );
   }
 
   private _callFetchedUserData(error, result) {
     // 저장된 정보가 없을 경우(처음 사용)
     if (result === null) {
-      console.log('fetched userdata no result :', result)
+      console.log('fetched userdata no result :', result);
       this.userData = new UserData();
       this.setItem(this.userData);
     } else {
-      console.log('fetched userdata :', result)
+      console.log('fetched userdata :', result);
       this.userData = JSON.parse(result);
     }
   }
 
   public async setItem(userData: UserData) {
     try {
-      await AsyncStorage.mergeItem(this.KEY_userData, JSON.stringify(userData), () => {
-        this.userData = userData;
-        // 유저 정보가 바뀔때마다 등록된 리스너를 통해 홈 화면도 업데이트 시켜 줌
-        if (this.userDatalistener !== undefined) this.userDatalistener(userData);
-      });
-
+      await AsyncStorage.mergeItem(
+        this.KEY_userData,
+        JSON.stringify(userData),
+        () => {
+          this.userData = userData;
+          // 유저 정보가 바뀔때마다 등록된 리스너를 통해 홈 화면도 업데이트 시켜 줌
+          if (this.userDatalistener !== undefined)
+            this.userDatalistener(userData);
+        }
+      );
     } catch (error) {
       console.log('set LocalStorage error:', error);
     }
   }
 
-  public async getItem(func: (userData:UserData) => void) {
+  public async getItem(func: (userData: UserData) => void) {
     try {
       await AsyncStorage.getItem(this.KEY_userData, (error, result) => {
-        func(JSON.parse(result)) 
+        func(JSON.parse(result));
       });
     } catch (error) {
       console.log('get LocalStorage error:', error);
     }
   }
 
+  public getUserData(): Promise<UserData> {
+    return new Promise((resolve, reject) => {
+      AsyncStorage.getItem(this.KEY_userData)
+        .then(res => {
+          console.log('res2', res);
+          resolve(JSON.parse(res));
+        })
+        .catch(err => reject(err));
+    });
+  }
 
+  public isSetup(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      AsyncStorage.getItem(this.KEY_userData)
+        .then(res => {
+          console.log('res2', res);
+          if (res !== null) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        })
+        .catch(err => reject(err));
+    });
+  }
 }
 
 export default new LocalStorage();

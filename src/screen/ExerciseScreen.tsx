@@ -107,7 +107,10 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
     // 마지막 라운드 over
     if (currentOrder > 4) {
-      
+      // 다음 단계로 올림
+      const { userData } = this.state;
+      userData.todayStep += 1
+      LocalStorage.setItem(userData);
       return this.props.navigation.navigate(Router.FINISH);
     }
 
@@ -136,13 +139,6 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     return this.state.currentOrder % 2 === this.ORDER_EXERCISE
       ? '운동 중입니다. 힘내세요'
       : '휴식을 취하세요';
-  }
-
-  onClickHeaderTimeListBtn(index: number) {
-    this.setState(
-      { ...this.state, currentOrder: index },
-      this._reset.bind(this)
-    );
   }
 
   render() {

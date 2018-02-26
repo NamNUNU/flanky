@@ -24,25 +24,19 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
   constructor(props) {
     super(props);
     this.state = {
-      ...this.state
+      ...this.state,
+      exercisePlan: []
     };
   }
-  componentDidMount() {
-    // 유저 정보가 바뀔때마다 정보를 업데이트 시켜주는 리스너 추가
-    LocalStorage.setUserDataListener(this.fetchedLocalItem.bind(this));
-  }
 
-  fetchedLocalItem(userData: UserData) {
-    console.log('HomeScreen User Data:', userData);
-    if (userData.exerciseLevel === undefined)
-      this.props.navigation.navigate(Router.SETTING);
-    else {
-      const exercisePlan: number[] = Exercise.getExercisePlan(
-        userData.exerciseLevel
-      );
-      const currentStep: number = userData.todayStep;
-      this.setState({ ...this.state, currentStep, userData, exercisePlan });
-    }
+  componentWillMount() {
+    LocalStorage.getUserData().then(res => {
+      this.setState({
+        userData: res,
+        exercisePlan: Exercise.getExercisePlan(res.exerciseLevel),
+        currentStep: res.todayStep
+      });
+    });
   }
 
   _onPressStartButton() {
@@ -50,23 +44,16 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
   }
 
   render() {
-    const { exercisePlan, currentStep } = this.state;
-    return this.state.userData === undefined ? (
-      <View>
-        <Text>you are first visitor!</Text>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate(Router.SETTING)}
-        >
-          <Text>Set up user level</Text>
-        </TouchableOpacity>
-      </View>
-    ) : (
+    const { exercisePlan, currentStep, userData } = this.state;
+    return (
       <View style={CommonStyles.container}>
         <Text style={styles.title}>오늘의 운동</Text>
-        <ExercisePlanView
-          exercisePlan={exercisePlan}
-          currentStep={this.state.userData.todayStep}
-        />
+        {userData && (
+          <ExercisePlanView
+            exercisePlan={exercisePlan}
+            currentStep={userData.todayStep}
+          />
+        )}
         <TouchableOpacity
           style={CommonStyles.blueBtn}
           onPress={this._onPressStartButton.bind(this)}
@@ -83,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     fontSize: 20
-  },
+  }
 });
 
 export default HomeScreen;
