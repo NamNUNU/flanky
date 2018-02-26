@@ -45,7 +45,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     // 유저 데이터를 가져옴
     LocalStorage.getItem((userData: UserData) => {
       console.log('ExerciseScreen User Data :', userData);

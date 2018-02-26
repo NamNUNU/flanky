@@ -30,13 +30,13 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
   }
 
   componentWillMount() {
-    LocalStorage.getUserData().then(res => {
+    LocalStorage.getItem((userData:UserData)=>{
       this.setState({
-        userData: res,
-        exercisePlan: Exercise.getExercisePlan(res.exerciseLevel),
-        currentStep: res.todayStep
+        userData: userData,
+        exercisePlan: Exercise.getExercisePlan(userData.exerciseLevel),
+        currentStep: userData.todayStep
       });
-    });
+    })
   }
 
   _onPressStartButton() {
