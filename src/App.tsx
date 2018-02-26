@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 // model
@@ -23,16 +23,13 @@ export default class App extends React.Component<{}, AppState> {
   constructor(props) {
     super(props);
     this.state = {
-      ...this.state,
+      isSetup: undefined
     };
   }
-
   componentWillMount() {
-    LocalStorage.isSetup()
-      .then(res => {
-        this.setState({ isSetup: res });
-      })
-      .catch(err => alert('An error occurred'));
+    LocalStorage.getItem((userData: UserData) => {
+      this.setState({ isSetup: userData !== null });
+    });
   }
 
   createRootNavigator() {
@@ -53,13 +50,13 @@ export default class App extends React.Component<{}, AppState> {
         }
       },
       {
-        initialRouteName: isSetup ? Router.HOME : Router.SETTING
+        initialRouteName: !isSetup ? Router.SETTING : Router.HOME
       }
     );
   }
 
   render() {
     const RootStack = this.createRootNavigator();
-    return <RootStack />;
+    return this.state.isSetup === undefined ? null : <RootStack />;
   }
 }

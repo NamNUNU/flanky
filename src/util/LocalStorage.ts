@@ -8,9 +8,7 @@ class LocalStorage {
 
   constructor() {
     // 로컬 정보를 리셋 하고 세팅 화면부터 시작할 때
-    AsyncStorage.clear();
-    // 리셋 없이 저장된 정보를 쓸 때
-    // this._fetchUserData();
+    // AsyncStorage.clear();
   }
 
   public async setItem(userData: UserData) {
@@ -29,21 +27,6 @@ class LocalStorage {
     } catch (error) {
       console.log('get LocalStorage error:', error);
     }
-  }
-
-  public isSetup(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      AsyncStorage.getItem(this.KEY_userData)
-        .then(res => {
-          console.log('res2', res);
-          if (res !== null) {
-            resolve(true);
-          } else {
-            resolve(false);
-          }
-        })
-        .catch(err => reject(err));
-    });
   }
 }
 
