@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 interface ExercisePlanViewProps {
   exercisePlan: number[];
@@ -35,12 +35,12 @@ class ExercisePlanView extends Component<
     return (
       <View style={styles.planContainer}>
         <View style={styles.planLeftBtn}>
-          <Text
+          <TouchableOpacity
+            disabled={viewStep === 0}
             onPress={this._onPressLeftButton.bind(this)}
-            style={styles.leftBtnTxt}
           >
-            {viewStep !== 0 && '<'}
-          </Text>
+            <Text style={styles.leftBtnTxt}>{viewStep !== 0 && '<'}</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.planText}>
           <Text style={styles.dayTxt}>{viewStep + 1}</Text>
@@ -49,12 +49,14 @@ class ExercisePlanView extends Component<
           </Text>
         </View>
         <View style={styles.planRightBtn}>
-          <Text
+          <TouchableOpacity
+            disabled={viewStep === exercisePlan.length}
             onPress={this._onPressRightButton.bind(this)}
-            style={styles.rightBtnTxt}
           >
-            {viewStep !== exercisePlan.length && '>'}
-          </Text>
+            <Text style={styles.rightBtnTxt}>
+              {viewStep !== exercisePlan.length && '>'}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
