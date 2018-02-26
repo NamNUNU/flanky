@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface ExercisePlanViewProps {
   exercisePlan: number[];
@@ -39,7 +40,12 @@ class ExercisePlanView extends Component<
             disabled={viewStep === 0}
             onPress={this._onPressLeftButton.bind(this)}
           >
-            <Text style={styles.leftBtnTxt}>{viewStep !== 0 && '<'}</Text>
+            <Icon
+              style={styles.leftBtnTxt}
+              name="angle-left"
+              size={30}
+              color={viewStep === 0 ? '#9c9c9c' : '#000'}
+            />
           </TouchableOpacity>
         </View>
         <View style={styles.planText}>
@@ -53,9 +59,12 @@ class ExercisePlanView extends Component<
             disabled={viewStep === exercisePlan.length}
             onPress={this._onPressRightButton.bind(this)}
           >
-            <Text style={styles.rightBtnTxt}>
-              {viewStep !== exercisePlan.length && '>'}
-            </Text>
+            <Icon
+              style={styles.rightBtnTxt}
+              name="angle-right"
+              size={30}
+              color={viewStep === exercisePlan.length ? '#9c9c9c' : '#000'}
+            />
           </TouchableOpacity>
         </View>
       </View>
