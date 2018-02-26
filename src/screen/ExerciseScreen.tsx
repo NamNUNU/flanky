@@ -105,7 +105,9 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
     clearInterval(this.exerciseTimer);
 
+    // 마지막 라운드 over
     if (currentOrder > 4) {
+      
       return this.props.navigation.navigate(Router.FINISH);
     }
 
@@ -163,7 +165,14 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
                 currentOrder={currentOrder}
               />
             </View>
-            <Text style={styles.mode}>{this.getTitleText()}</Text>
+            <View>
+              <Text style={styles.roundText}>
+                {currentOrder % 2 === 1
+                  ? 'Rest'
+                  : (currentOrder + 2) / 2 + 'Round'}
+              </Text>
+            </View>
+
             <View style={styles.counter}>
               <ExerciseTimer
                 todaySeconds={goalSeconds}
@@ -171,6 +180,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
                 isStart={(!isRunning && !isExerciseMode) || isExerciseMode}
               />
             </View>
+            <Text style={styles.titleText}>{this.getTitleText()}</Text>
           </View>
         )}
         {!isRunning ? (
@@ -197,10 +207,14 @@ const styles = StyleSheet.create({
   counter: {
     alignItems: 'center'
   },
-  mode: {
+  roundText: {
+    textAlign: 'center',
+    fontSize: 20
+  },
+  titleText: {
     marginBottom: 30,
     textAlign: 'center',
-    fontSize: 30
+    fontSize: 20
   }
 });
 
