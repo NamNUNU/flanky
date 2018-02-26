@@ -26,14 +26,17 @@ class SettingScreen extends Component<NavigationProps, SettingScreenState> {
     LocalStorage.getItem((userData: UserData) => {
       userData.exerciseLevel = level;
       LocalStorage.setItem(userData);
-      this.props.navigation.replaceAt(Router.HOME);
-      // return this.props.navigation.dispatch(
-      //   NavigationActions.reset({
-      //     index: 0,
-      //     actions: [
-      //       NavigationActions.navigate({ routeName: Router.HOME })]
-      //   })
-      // );
+
+      // this.props.navigation.navigate(Router.HOME);
+      this.props.navigation.PopToTop
+
+      return this.props.navigation.dispatch(
+        NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: Router.HOME })]
+        })
+      );
     });
   }
 
