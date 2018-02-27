@@ -12,9 +12,20 @@ export const CommonStyles = StyleSheet.create({
   blueBtn: {
     backgroundColor: '#83bcff',
     borderRadius: 6,
-    marginTop:10,
-},
+    marginTop: 10
+  },
   blueBtnTxt: {
+    paddingVertical: 8,
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 24
+  },
+  grayBtn: {
+    backgroundColor: '#9c9c9c',
+    borderRadius: 6,
+    marginTop: 10
+  },
+  grayBtnTxt: {
     paddingVertical: 8,
     textAlign: 'center',
     color: 'white',

@@ -45,30 +45,55 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
     this.props.navigation.navigate(Router.EXERCISE);
   }
 
-  onPressSetup(){
+  onPressSetup() {
     this.props.navigation.navigate(Router.SETTING);
+  }
+
+  onPressRightButton() {
+    this.setState({ currentStep: this.state.currentStep + 1 });
+  }
+
+  onPressLeftButton() {
+    this.setState({ currentStep: this.state.currentStep - 1 });
   }
 
   render() {
     const { exercisePlan, currentStep, userData } = this.state;
+    const isDisable = userData && userData.todayStep !== currentStep;
+
+    console.log('isDisable',isDisable)
+
     return userData === undefined ? (
-      <HomeEmptySetup 
-        onPressSetup={this.onPressSetup.bind(this)}
-      />
+      <HomeEmptySetup onPressSetup={this.onPressSetup.bind(this)} />
     ) : (
       <View style={CommonStyles.container}>
         <Text style={styles.title}>오늘의 운동</Text>
         {userData && (
           <ExercisePlanView
             exercisePlan={exercisePlan}
-            currentStep={userData.todayStep}
+            currentStep={currentStep}
+            onPressRightButton={this.onPressRightButton.bind(this)}
+            onPressLeftButton={this.onPressLeftButton.bind(this)}
           />
         )}
         <TouchableOpacity
-          style={CommonStyles.blueBtn}
+          style={
+            userData.todayStep !== currentStep
+              ? CommonStyles.grayBtn
+              : CommonStyles.blueBtn
+          }
           onPress={this._onPressStartButton.bind(this)}
+          disabled={userData.todayStep !== currentStep}
         >
-          <Text style={CommonStyles.blueBtnTxt}>Exercise Start</Text>
+          <Text
+            style={
+              userData.todayStep !== currentStep
+                ? CommonStyles.grayBtnTxt
+                : CommonStyles.blueBtnTxt
+            }
+          >
+            Exercise Start
+          </Text>
         </TouchableOpacity>
       </View>
     );

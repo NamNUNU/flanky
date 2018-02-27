@@ -5,65 +5,44 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 interface ExercisePlanViewProps {
   exercisePlan: number[];
   currentStep: number;
+  onPressRightButton: () => void;
+  onPressLeftButton: () => void;
 }
 
-interface ExercisePlanViewState {
-  viewStep: number;
-}
-
-class ExercisePlanView extends Component<
-  ExercisePlanViewProps,
-  ExercisePlanViewState
-> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewStep: this.props.currentStep
-    };
-  }
-
-  _onPressRightButton() {
-    this.setState({ viewStep: this.state.viewStep + 1 });
-  }
-
-  _onPressLeftButton() {
-    this.setState({ viewStep: this.state.viewStep - 1 });
-  }
-
+class ExercisePlanView extends Component<ExercisePlanViewProps, {}> {
   render() {
     const { exercisePlan, currentStep } = this.props;
-    const { viewStep } = this.state;
     return (
       <View style={styles.planContainer}>
         <View style={styles.planLeftBtn}>
           <TouchableOpacity
-            disabled={viewStep === 0}
-            onPress={this._onPressLeftButton.bind(this)}
+            disabled={currentStep === 0}
+            onPress={this.props.onPressLeftButton}
           >
             <Icon
               style={styles.leftBtnTxt}
               name="angle-left"
               size={30}
-              color={viewStep === 0 ? '#9c9c9c' : '#000'}
+              color={currentStep === 0 ? '#9c9c9c' : '#000'}
             />
           </TouchableOpacity>
         </View>
         <View style={styles.planText}>
-          <Text style={styles.dayTxt}>{viewStep + 1}</Text>
+          <Text style={styles.dayTxt}>{currentStep + 1}</Text>
           <Text style={styles.second}>
-            {exercisePlan[viewStep] < 0 ? 'Rest' : exercisePlan[viewStep]}
+            {exercisePlan[currentStep] < 0 ? 'Rest' : exercisePlan[currentStep]}
           </Text>
         </View>
         <View style={styles.planRightBtn}>
           <TouchableOpacity
-            disabled={viewStep === exercisePlan.length}
-            onPress={this._onPressRightButton.bind(this)}
+            disabled={currentStep === exercisePlan.length}
+            onPress={this.props.onPressRightButton}
           >
             <Icon
               style={styles.rightBtnTxt}
               name="angle-right"
               size={30}
-              color={viewStep === exercisePlan.length ? '#9c9c9c' : '#000'}
+              color={currentStep === exercisePlan.length ? '#9c9c9c' : '#000'}
             />
           </TouchableOpacity>
         </View>
