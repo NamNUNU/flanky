@@ -15,25 +15,10 @@ import SettingScreen from './screen/SettingScreen';
 import ExerciseScreen from './screen/ExerciseScreen';
 import FinishScreen from './screen/FinishScreen';
 
-interface AppState {
-  isSetup: boolean;
-}
 
-export default class App extends React.Component<{}, AppState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSetup: undefined
-    };
-  }
-  componentWillMount() {
-    LocalStorage.getItem((userData: UserData) => {
-      this.setState({ isSetup: userData !== null });
-    });
-  }
-
+export default class App extends React.Component<{}, {}> {
+  
   createRootNavigator() {
-    const { isSetup } = this.state;
     return StackNavigator(
       {
         Setting: {
@@ -50,13 +35,13 @@ export default class App extends React.Component<{}, AppState> {
         }
       },
       {
-        initialRouteName: !isSetup ? Router.SETTING : Router.HOME
+        initialRouteName: Router.HOME
       }
     );
   }
 
   render() {
     const RootStack = this.createRootNavigator();
-    return this.state.isSetup === undefined ? null : <RootStack />;
+    return <RootStack />;
   }
 }

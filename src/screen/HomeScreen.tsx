@@ -13,6 +13,7 @@ import LocalStorage from '../util/LocalStorage';
 
 // component
 import ExercisePlanView from '../component/ExercisePlanView';
+import HomeEmptySetup from '../component/HomeEmptySetup';
 
 interface HomeScreenState {
   userData: UserData;
@@ -30,22 +31,31 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
   }
 
   componentWillMount() {
-    LocalStorage.getItem((userData:UserData)=>{
+    LocalStorage.getItem((userData: UserData) => {
+      if (userData === null) return;
       this.setState({
         userData: userData,
         exercisePlan: Exercise.getExercisePlan(userData.exerciseLevel),
         currentStep: userData.todayStep
       });
-    })
+    });
   }
 
   _onPressStartButton() {
     this.props.navigation.navigate(Router.EXERCISE);
   }
 
+  onPressSetup(){
+    this.props.navigation.navigate(Router.SETTING);
+  }
+
   render() {
     const { exercisePlan, currentStep, userData } = this.state;
-    return (
+    return userData === undefined ? (
+      <HomeEmptySetup 
+        onPressSetup={this.onPressSetup.bind(this)}
+      />
+    ) : (
       <View style={CommonStyles.container}>
         <Text style={styles.title}>오늘의 운동</Text>
         {userData && (
