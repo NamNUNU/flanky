@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface TimeControlBtnProps {
   onPressTimeControlBtn: () => void;
+  onPressEndBtn: () => void;
   isRunning: boolean;
 }
 
@@ -26,7 +27,10 @@ class TimeControlBtn extends Component<TimeControlBtnProps, {}> {
             <Icon style={styles.btnTxt} name="play" size={32} color={'white'} />
           )}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.timeControlBtn}>
+        <TouchableOpacity
+          style={styles.timeControlBtn}
+          onPress={this.props.onPressEndBtn}
+        >
           <Text style={styles.btnTxt}>{'End'}</Text>
         </TouchableOpacity>
       </View>

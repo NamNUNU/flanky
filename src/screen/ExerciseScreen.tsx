@@ -89,15 +89,8 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     this.setState({ isRunning: !this.state.isRunning, isExerciseMode });
   }
 
-  _reset() {
-    clearInterval(this.exerciseTimer);
-    const goalSeconds = this.getTodaySeconds(this.state.currentStep);
-    this.setState({
-      ...this.state,
-      isRunning: false,
-      goalSeconds,
-      currentSeconds: goalSeconds
-    });
+  onPressEndBtn() {
+    this._timeOut();
   }
 
   // 시간이 다되었을 때
@@ -189,6 +182,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
         <View style={styles.timeControlBtn}>
           <TimeControlBtn
             onPressTimeControlBtn={this.onPressTimeControlBtn.bind(this)}
+            onPressEndBtn={this.onPressEndBtn.bind(this)}
             isRunning={isRunning}
           />
         </View>
@@ -221,7 +215,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   timeControlBtn: {
-    marginTop:30,
+    marginTop: 30
   }
 });
 
