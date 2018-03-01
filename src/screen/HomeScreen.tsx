@@ -14,7 +14,7 @@ import LocalStorage from '../util/LocalStorage';
 // component
 import HomePlanView from '../component/home/HomePlanView';
 import HomeEmptySetup from '../component/home/HomeEmptySetup';
-import Container from '../component/common/Container';
+import Calendar from '../component/home/Calendar';
 
 interface HomeScreenState {
   userData: UserData;
@@ -88,6 +88,7 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
                 <Text style={styles.startBtn}>Exercise Start</Text>
               )}
             </TouchableOpacity>
+            <Calendar userData={userData} exercisePlan={exercisePlan} />
           </View>
         )}
       </View>
@@ -96,7 +97,7 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
     backgroundColor: '#29a2d9'
   },
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   startBtnWrap: {
-    marginTop:20,
+    marginTop: 20,
     backgroundColor: '#237BA1',
     borderRadius: 30
   },
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     textAlign: 'center',
     color: 'white',
-    fontSize:24,
+    fontSize: 24
   }
 });
 
