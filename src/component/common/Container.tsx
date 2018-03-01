@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 
 class Container extends Component<{}, {}> {
   render() {

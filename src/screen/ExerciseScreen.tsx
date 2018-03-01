@@ -169,31 +169,35 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
                   : (currentStep + 2) / 2 + 'Round'}
               </Text>
             </View>
-            <View style={styles.counter}>  
-            <ExerciseTimer
-              todaySeconds={goalSeconds}
-              currentSeconds={currentSeconds}
-              isStart={(!isRunning && !isExerciseMode) || isExerciseMode}
-            />
+            <View style={styles.counter}>
+              <ExerciseTimer
+                todaySeconds={goalSeconds}
+                currentSeconds={currentSeconds}
+                isStart={(!isRunning && !isExerciseMode) || isExerciseMode}
+              />
             </View>
             <Text style={styles.titleText}>{this.getTitleText()}</Text>
           </View>
         )}
-        {!isRunning ? (
-          <TouchableOpacity
-            style={CommonStyles.blueBtn}
-            onPress={this._onPressStartButton.bind(this)}
-          >
-            <Text style={CommonStyles.blueBtnTxt}>{'Start'}</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={CommonStyles.blueBtn}
-            onPress={this._onPressAddSeconds.bind(this)}
-          >
-            <Text style={CommonStyles.blueBtnTxt}>+10 seconds</Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity onPress={this._onPressAddSeconds.bind(this)}>
+          {/* {isRunning && ( */}
+          <View style={styles.addSeconds}>
+            <View style={styles.addSecondsLeft}>
+              <Text style={styles.addSecondsLeftText}>시간추가</Text>
+            </View>
+            <View style={styles.addSecondsRight}>
+              <Text style={styles.addSecondsRightText}>10</Text>
+            </View>
+          </View>
+          {/* )} */}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={CommonStyles.blueBtn}
+          onPress={this._onPressStartButton.bind(this)}
+        >
+          <Text style={CommonStyles.blueBtnTxt}>{'Start'}</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -216,8 +220,42 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   counter: {
-    alignItems: 'center',
-  }
+    alignItems: 'center'
+  },
+  addSeconds: {
+    width: 150,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  addSecondsLeft: {
+    flex: 4,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    overflow: 'hidden',
+    backgroundColor: '#65BADF',
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+  },
+  addSecondsLeftText: {
+    color:'white',
+    fontSize:16,
+    fontWeight: 'bold',
+  },
+  addSecondsRight: {
+    flex: 1,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    overflow: 'hidden',
+    backgroundColor: '#3E454D',
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  addSecondsRightText: {
+    color:'white',
+    fontSize:16,
+    fontWeight: 'bold',
+  },
 });
 
 export default ExerciseScreen;
