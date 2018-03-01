@@ -9,6 +9,7 @@ import { NavigationProps, UserData } from '../common/Model';
 
 // component
 import SelectList from '../component/common/SelectList';
+import Container from '../component/common/Container';
 
 interface SettingScreenState {
   selectListItem: string[];
@@ -36,23 +37,18 @@ class SettingScreen extends Component<NavigationProps, SettingScreenState> {
 
   render() {
     return (
-      <View style={styles.container}>
+      <Container>
         <SelectList
           title={'운동 수준을 선택해주세요'}
           selectListItem={this.state.selectListItem}
           onPress={this.onPressButton.bind(this)}
         />
-      </View>
+      </Container>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center'
-  }
 });
 
 export default SettingScreen;
