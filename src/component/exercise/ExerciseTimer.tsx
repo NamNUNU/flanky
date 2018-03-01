@@ -3,7 +3,7 @@ import { StyleSheet, Text } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 // model
-import { UserData, NavigationProps, ExerciseMode } from '../common/Model';
+import { UserData, NavigationProps, ExerciseMode } from '../../common/Model';
 
 interface ExerciseTimerProps {
   todaySeconds: number;

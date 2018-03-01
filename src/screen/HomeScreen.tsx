@@ -12,8 +12,8 @@ import Router from '../util/Router';
 import LocalStorage from '../util/LocalStorage';
 
 // component
-import ExercisePlanView from '../component/ExercisePlanView';
-import HomeEmptySetup from '../component/HomeEmptySetup';
+import HomePlanView from '../component/home/HomePlanView';
+import HomeEmptySetup from '../component/home/HomeEmptySetup';
 
 interface HomeScreenState {
   userData: UserData;
@@ -69,7 +69,7 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
       <View style={CommonStyles.container}>
         <Text style={styles.title}>오늘의 운동</Text>
         {userData && (
-          <ExercisePlanView
+          <HomePlanView
             exercisePlan={exercisePlan}
             currentStep={currentStep}
             onPressRightButton={this.onPressRightButton.bind(this)}

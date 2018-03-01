@@ -12,8 +12,8 @@ import LocalStorage from '../util/LocalStorage';
 import Router from '../util/Router';
 
 // view
-import ExerciseHeader from '../component/ExerciseHeader';
-import ExerciseTimer from '../component/ExerciseTimer';
+import ExerciseHeader from '../component/exercise/ExerciseHeader';
+import ExerciseTimer from '../component/exercise/ExerciseTimer';
 
 interface ExerciseScreenState {
   userData: UserData;

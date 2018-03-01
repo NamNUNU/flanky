@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-interface ExercisePlanViewProps {
+interface HomePlanViewProps {
   exercisePlan: number[];
   currentStep: number;
   onPressRightButton: () => void;
   onPressLeftButton: () => void;
 }
 
-class ExercisePlanView extends Component<ExercisePlanViewProps, {}> {
+class HomePlanView extends Component<HomePlanViewProps, {}> {
   render() {
     const { exercisePlan, currentStep } = this.props;
     return (
@@ -80,4 +80,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ExercisePlanView;
+export default HomePlanView;
