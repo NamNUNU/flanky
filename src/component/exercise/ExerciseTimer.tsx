@@ -52,7 +52,9 @@ class ExerciseTimer extends Component<ExerciseTimerProps, {}> {
 const styles = StyleSheet.create({
   second: {
     textAlign: 'center',
-    fontSize: 24
+    fontSize: 24,
+    color: 'white',
+    backgroundColor:'#000'
   }
 });
 

@@ -15,7 +15,7 @@ class Container extends Component<{}, {}> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7F95D1',
+    backgroundColor: '#29a2d9',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal:26,

@@ -11,9 +11,10 @@ import { CommonStyles } from '../common/CommonStyles';
 import LocalStorage from '../util/LocalStorage';
 import Router from '../util/Router';
 
-// view
+// component
 import ExerciseHeader from '../component/exercise/ExerciseHeader';
 import ExerciseTimer from '../component/exercise/ExerciseTimer';
+import Container from '../component/common/Container'
 
 interface ExerciseScreenState {
   userData: UserData;
@@ -152,12 +153,13 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     } = this.state;
 
     return (
-      <View style={CommonStyles.container}>
+      <View style={styles.container}>
         {userData && (
           <View>
             <View>
               <ExerciseHeader
                 currentStep={currentStep}
+                todaySeconds={this.todaySeconds}
               />
             </View>
             <View>
@@ -199,8 +201,13 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    backgroundColor: '#29a2d9',
+  },
   counter: {
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor:'black'
   },
   roundText: {
     textAlign: 'center',
