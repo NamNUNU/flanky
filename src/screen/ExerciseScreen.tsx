@@ -12,10 +12,10 @@ import LocalStorage from '../util/LocalStorage';
 import Router from '../util/Router';
 
 // component
-import ExerciseHeader from '../component/exercise/ExerciseHeader';
+import AddTimeBtn from '../component/exercise/AddTimeBtn';
 import ExerciseTimer from '../component/exercise/ExerciseTimer';
-import Container from '../component/common/Container';
-import AddTimeButton from '../component/common/AddTimeButton';
+import TimeControlBtn from '../component/exercise/TimeControlBtn';
+import ExerciseHeader from '../component/exercise/ExerciseHeader';
 
 interface ExerciseScreenState {
   userData: UserData;
@@ -71,7 +71,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
   }
 
   // 시작 버튼 클릭 시
-  _onPressStartButton() {
+  onPressTimeControlBtn() {
     console.log('this.state.isRunning', this.state.isRunning);
     // 시계가 동작하지 않을 때 시작시킴
     if (!this.state.isRunning) {
@@ -124,7 +124,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
         currentSeconds: goalSeconds,
         isRunning: false
       },
-      this._onPressStartButton.bind(this)
+      this.onPressTimeControlBtn.bind(this)
     );
   }
 
@@ -181,17 +181,17 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
           </View>
         )}
         <View style={styles.addTime}>
-          <AddTimeButton
+          <AddTimeBtn
             onPressAddSeconds={this.onPressAddSeconds.bind(this)}
             isRunning={isRunning}
           />
         </View>
-        <TouchableOpacity
-          style={CommonStyles.blueBtn}
-          onPress={this._onPressStartButton.bind(this)}
-        >
-          <Text style={CommonStyles.blueBtnTxt}>{'Start'}</Text>
-        </TouchableOpacity>
+        <View style={styles.timeControlBtn}>
+          <TimeControlBtn
+            onPressTimeControlBtn={this.onPressTimeControlBtn.bind(this)}
+            isRunning={isRunning}
+          />
+        </View>
       </View>
     );
   }
@@ -203,12 +203,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#29a2d9'
   },
   roundText: {
+    paddingVertical: 20,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 36,
     color: 'white'
   },
   titleText: {
-    marginBottom: 30,
+    paddingVertical: 20,
     textAlign: 'center',
     fontSize: 20,
     color: 'white'
@@ -218,6 +219,9 @@ const styles = StyleSheet.create({
   },
   addTime: {
     alignItems: 'center'
+  },
+  timeControlBtn: {
+    marginTop:30,
   }
 });
 

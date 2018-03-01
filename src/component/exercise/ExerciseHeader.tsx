@@ -23,34 +23,33 @@ class ExerciseHeader extends Component<ExerciseHeaderProps, {}> {
           </View>
           <View style={styles.infoArea}>
           <Text style={styles.infoTitle}>세트</Text>
-          <Text style={styles.infoDesc}>{currentStep}/5</Text>
+          <Text style={styles.infoDesc}>{currentStep+1}/5</Text>
           </View>
         </View>
-        <View>
+        {/* <View>
           <Progress.Bar
             progress={currentStep / 5}
             width={200}
             color={'#80ffe8'}
             borderColor={'#000000'}
           />
-        </View>
+        </View> */}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  exerciseHeader: {
+    marginTop:30,
+  },
   exerciseInfo: {
-    marginVertical:30,
     paddingHorizontal:40,
     paddingVertical: 10,
     width: '100%',
     backgroundColor: '#65bbdf',
     flexDirection: 'row',
     justifyContent: 'space-between'
-  },
-  exerciseHeader: {
-    marginBottom: 20
   },
   infoArea: {
     backgroundColor: '#29a2d9',

@@ -17,7 +17,7 @@ import FinishScreen from './screen/FinishScreen';
 
 
 export default class App extends React.Component<{}, {}> {
-  
+
   createRootNavigator() {
     return StackNavigator(
       {

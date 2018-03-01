@@ -12,7 +12,6 @@ export const CommonStyles = StyleSheet.create({
   blueBtn: {
     backgroundColor: '#83bcff',
     borderRadius: 6,
-    marginTop: 10
   },
   blueBtnTxt: {
     paddingVertical: 8,
@@ -23,7 +22,6 @@ export const CommonStyles = StyleSheet.create({
   grayBtn: {
     backgroundColor: '#9c9c9c',
     borderRadius: 6,
-    marginTop: 10
   },
   grayBtnTxt: {
     paddingVertical: 8,
