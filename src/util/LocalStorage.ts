@@ -8,7 +8,7 @@ class LocalStorage {
 
   constructor() {
     // 로컬 정보를 리셋 하고 세팅 화면부터 시작할 때
-    // AsyncStorage.clear();
+    AsyncStorage.clear();
   }
 
   public async setItem(userData: UserData) {

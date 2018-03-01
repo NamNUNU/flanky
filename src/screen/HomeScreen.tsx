@@ -14,6 +14,7 @@ import LocalStorage from '../util/LocalStorage';
 // component
 import HomePlanView from '../component/home/HomePlanView';
 import HomeEmptySetup from '../component/home/HomeEmptySetup';
+import Container from '../component/common/Container';
 
 interface HomeScreenState {
   userData: UserData;
@@ -61,41 +62,45 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
     const { exercisePlan, currentStep, userData } = this.state;
     const isDisable = userData && userData.todayStep !== currentStep;
 
-    console.log('isDisable',isDisable)
+    console.log('isDisable', isDisable);
 
-    return userData === undefined ? (
-      <HomeEmptySetup onPressSetup={this.onPressSetup.bind(this)} />
-    ) : (
-      <View style={CommonStyles.container}>
-        <Text style={styles.title}>오늘의 운동</Text>
-        {userData && (
-          <HomePlanView
-            exercisePlan={exercisePlan}
-            currentStep={currentStep}
-            onPressRightButton={this.onPressRightButton.bind(this)}
-            onPressLeftButton={this.onPressLeftButton.bind(this)}
-          />
+    return (
+      <Container>
+        {userData === undefined ? (
+          <HomeEmptySetup onPressSetup={this.onPressSetup.bind(this)} />
+        ) : (
+          <View style={CommonStyles.container}>
+            <Text style={styles.title}>오늘의 운동</Text>
+            {userData && (
+              <HomePlanView
+                exercisePlan={exercisePlan}
+                currentStep={currentStep}
+                onPressRightButton={this.onPressRightButton.bind(this)}
+                onPressLeftButton={this.onPressLeftButton.bind(this)}
+              />
+            )}
+            <TouchableOpacity
+              style={
+                userData.todayStep !== currentStep
+                  ? CommonStyles.grayBtn
+                  : CommonStyles.blueBtn
+              }
+              onPress={this._onPressStartButton.bind(this)}
+              disabled={userData.todayStep !== currentStep}
+            >
+              <Text
+                style={
+                  userData.todayStep !== currentStep
+                    ? CommonStyles.grayBtnTxt
+                    : CommonStyles.blueBtnTxt
+                }
+              >
+                Exercise Start
+              </Text>
+            </TouchableOpacity>
+          </View>
         )}
-        <TouchableOpacity
-          style={
-            userData.todayStep !== currentStep
-              ? CommonStyles.grayBtn
-              : CommonStyles.blueBtn
-          }
-          onPress={this._onPressStartButton.bind(this)}
-          disabled={userData.todayStep !== currentStep}
-        >
-          <Text
-            style={
-              userData.todayStep !== currentStep
-                ? CommonStyles.grayBtnTxt
-                : CommonStyles.blueBtnTxt
-            }
-          >
-            Exercise Start
-          </Text>
-        </TouchableOpacity>
-      </View>
+      </Container>
     );
   }
 }
