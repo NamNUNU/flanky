@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 20,
     textAlign: 'center',
-    fontSize: 20
+    fontSize: 20,
+    color:'white'
   }
 });
 

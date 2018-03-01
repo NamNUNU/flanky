@@ -21,12 +21,14 @@ class HomePlanView extends Component<HomePlanViewProps, {}> {
               disabled={currentStep === 0}
               onPress={this.props.onPressLeftButton}
             >
-              <Icon
-                style={styles.leftBtnTxt}
-                name="angle-left"
-                size={60}
-                color={currentStep === 0 ? '#9c9c9c' : '#000'}
-              />
+              {currentStep !== 0 && (
+                <Icon
+                  style={styles.leftBtnTxt}
+                  name="angle-left"
+                  size={60}
+                  color={'#fff'}
+                />
+              )}
             </TouchableOpacity>
           </View>
           <View style={styles.planText}>
@@ -41,12 +43,12 @@ class HomePlanView extends Component<HomePlanViewProps, {}> {
               disabled={currentStep === exercisePlan.length}
               onPress={this.props.onPressRightButton}
             >
-              <Icon
+              {currentStep !== exercisePlan.length&&<Icon
                 style={styles.rightBtnTxt}
                 name="angle-right"
                 size={60}
-                color={currentStep === exercisePlan.length ? '#9c9c9c' : '#000'}
-              />
+                color={'#fff'}
+              />}
             </TouchableOpacity>
           </View>
         </View>
@@ -62,28 +64,32 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   planLeftBtn: {
-    flex: 1,
+    flex: 1
   },
   planRightBtn: {
-    flex: 1,
+    flex: 1
   },
   planText: {
-    flex: 4
+    flex: 4,
+    color:'white'
   },
   leftBtnTxt: {
-    textAlign: 'center'
+    textAlign: 'center',
+    color:'white'
   },
   rightBtnTxt: {
-    textAlign: 'center'
+    textAlign: 'center',
+    color:'white'
   },
   dayTxt: {
     textAlign: 'center',
     fontSize: 20,
+    color:'white'
   },
   second: {
     textAlign: 'center',
     fontSize: 40,
-    
+    color:'white'
   }
 });
 

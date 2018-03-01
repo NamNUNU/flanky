@@ -204,12 +204,14 @@ const styles = StyleSheet.create({
   },
   roundText: {
     textAlign: 'center',
-    fontSize: 20
+    fontSize: 20,
+    color: 'white'
   },
   titleText: {
     marginBottom: 30,
     textAlign: 'center',
-    fontSize: 20
+    fontSize: 20,
+    color: 'white'
   }
 });
 
