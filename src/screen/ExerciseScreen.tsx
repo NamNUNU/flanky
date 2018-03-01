@@ -14,7 +14,7 @@ import Router from '../util/Router';
 // component
 import ExerciseHeader from '../component/exercise/ExerciseHeader';
 import ExerciseTimer from '../component/exercise/ExerciseTimer';
-import Container from '../component/common/Container'
+import Container from '../component/common/Container';
 
 interface ExerciseScreenState {
   userData: UserData;
@@ -110,7 +110,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     if (currentStep > 4) {
       // 다음 단계로 올림
       const { userData } = this.state;
-      userData.todayStep += 1
+      userData.todayStep += 1;
       LocalStorage.setItem(userData);
       return this.props.navigation.navigate(Router.FINISH);
     }
@@ -169,13 +169,12 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
                   : (currentStep + 2) / 2 + 'Round'}
               </Text>
             </View>
-
-            <View style={styles.counter}>
-              <ExerciseTimer
-                todaySeconds={goalSeconds}
-                currentSeconds={currentSeconds}
-                isStart={(!isRunning && !isExerciseMode) || isExerciseMode}
-              />
+            <View style={styles.counter}>  
+            <ExerciseTimer
+              todaySeconds={goalSeconds}
+              currentSeconds={currentSeconds}
+              isStart={(!isRunning && !isExerciseMode) || isExerciseMode}
+            />
             </View>
             <Text style={styles.titleText}>{this.getTitleText()}</Text>
           </View>
@@ -202,12 +201,8 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    backgroundColor: '#29a2d9',
-  },
-  counter: {
-    alignItems: 'center',
-    backgroundColor:'black'
+    flex: 1,
+    backgroundColor: '#29a2d9'
   },
   roundText: {
     textAlign: 'center',
@@ -219,6 +214,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     color: 'white'
+  },
+  counter: {
+    alignItems: 'center',
   }
 });
 
