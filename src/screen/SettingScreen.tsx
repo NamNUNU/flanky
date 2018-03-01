@@ -8,7 +8,7 @@ import LocalStorage from '../util/LocalStorage';
 import { NavigationProps, UserData } from '../common/Model';
 
 // component
-import SelectList from '../component/SelectList';
+import SelectList from '../component/common/SelectList';
 
 interface SettingScreenState {
   selectListItem: string[];

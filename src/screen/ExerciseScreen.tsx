@@ -157,7 +157,6 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
           <View>
             <View>
               <ExerciseHeader
-                todaySeconds={this.todaySeconds}
                 currentStep={currentStep}
               />
             </View>

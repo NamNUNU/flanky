@@ -7,7 +7,7 @@ import { StyleSheet } from 'react-native';
 export const CommonStyles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   blueBtn: {
     backgroundColor: '#83bcff',
