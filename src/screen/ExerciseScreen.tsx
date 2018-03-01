@@ -15,6 +15,7 @@ import Router from '../util/Router';
 import ExerciseHeader from '../component/exercise/ExerciseHeader';
 import ExerciseTimer from '../component/exercise/ExerciseTimer';
 import Container from '../component/common/Container';
+import AddTimeButton from '../component/common/AddTimeButton';
 
 interface ExerciseScreenState {
   userData: UserData;
@@ -127,7 +128,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     );
   }
 
-  _onPressAddSeconds() {
+  onPressAddSeconds() {
     this.setState({
       ...this.state,
       goalSeconds: this.state.goalSeconds + 10,
@@ -179,19 +180,12 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
             <Text style={styles.titleText}>{this.getTitleText()}</Text>
           </View>
         )}
-        <TouchableOpacity onPress={this._onPressAddSeconds.bind(this)}>
-          {/* {isRunning && ( */}
-          <View style={styles.addSeconds}>
-            <View style={styles.addSecondsLeft}>
-              <Text style={styles.addSecondsLeftText}>시간추가</Text>
-            </View>
-            <View style={styles.addSecondsRight}>
-              <Text style={styles.addSecondsRightText}>10</Text>
-            </View>
-          </View>
-          {/* )} */}
-        </TouchableOpacity>
-
+        <View style={styles.addTime}>
+          <AddTimeButton
+            onPressAddSeconds={this.onPressAddSeconds.bind(this)}
+            isRunning={isRunning}
+          />
+        </View>
         <TouchableOpacity
           style={CommonStyles.blueBtn}
           onPress={this._onPressStartButton.bind(this)}
@@ -222,40 +216,9 @@ const styles = StyleSheet.create({
   counter: {
     alignItems: 'center'
   },
-  addSeconds: {
-    width: 150,
-    flexDirection: 'row',
-    justifyContent: 'center',
+  addTime: {
     alignItems: 'center'
-  },
-  addSecondsLeft: {
-    flex: 4,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    overflow: 'hidden',
-    backgroundColor: '#65BADF',
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
-  },
-  addSecondsLeftText: {
-    color:'white',
-    fontSize:16,
-    fontWeight: 'bold',
-  },
-  addSecondsRight: {
-    flex: 1,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    overflow: 'hidden',
-    backgroundColor: '#3E454D',
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  addSecondsRightText: {
-    color:'white',
-    fontSize:16,
-    fontWeight: 'bold',
-  },
+  }
 });
 
 export default ExerciseScreen;
