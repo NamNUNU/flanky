@@ -24,3 +24,10 @@ export enum ExerciseMode {
     MODE_EXERCISE,
     MODE_REST,
 }
+
+export interface SelectListItem {
+    level:string;
+    color:string;
+    desc:string;
+    desc2:string;
+}

@@ -43,12 +43,14 @@ class HomePlanView extends Component<HomePlanViewProps, {}> {
               disabled={currentStep === exercisePlan.length}
               onPress={this.props.onPressRightButton}
             >
-              {currentStep !== exercisePlan.length&&<Icon
-                style={styles.rightBtnTxt}
-                name="angle-right"
-                size={60}
-                color={'#fff'}
-              />}
+              {currentStep !== exercisePlan.length - 1 && (
+                <Icon
+                  style={styles.rightBtnTxt}
+                  name="angle-right"
+                  size={60}
+                  color={'#fff'}
+                />
+              )}
             </TouchableOpacity>
           </View>
         </View>
@@ -71,25 +73,25 @@ const styles = StyleSheet.create({
   },
   planText: {
     flex: 4,
-    color:'white'
+    color: 'white'
   },
   leftBtnTxt: {
     textAlign: 'center',
-    color:'white'
+    color: 'white'
   },
   rightBtnTxt: {
     textAlign: 'center',
-    color:'white'
+    color: 'white'
   },
   dayTxt: {
     textAlign: 'center',
     fontSize: 20,
-    color:'white'
+    color: 'white'
   },
   second: {
     textAlign: 'center',
     fontSize: 40,
-    color:'white'
+    color: 'white'
   }
 });
 

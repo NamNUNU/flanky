@@ -65,7 +65,7 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
     console.log('isDisable', isDisable);
 
     return (
-      <Container>
+      <View style={styles.container}>
         {userData === undefined ? (
           <HomeEmptySetup onPressSetup={this.onPressSetup.bind(this)} />
         ) : (
@@ -80,37 +80,42 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
               />
             )}
             <TouchableOpacity
-              style={
-                userData.todayStep !== currentStep
-                  ? CommonStyles.grayBtn
-                  : CommonStyles.blueBtn
-              }
+              style={styles.startBtnWrap}
               onPress={this._onPressStartButton.bind(this)}
               disabled={userData.todayStep !== currentStep}
             >
-              <Text
-                style={
-                  userData.todayStep !== currentStep
-                    ? CommonStyles.grayBtnTxt
-                    : CommonStyles.blueBtnTxt
-                }
-              >
-                Exercise Start
-              </Text>
+              {userData.todayStep === currentStep && (
+                <Text style={styles.startBtn}>Exercise Start</Text>
+              )}
             </TouchableOpacity>
           </View>
         )}
-      </Container>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container:{
+    flex: 1,
+    backgroundColor: '#29a2d9'
+  },
   title: {
     marginBottom: 20,
     textAlign: 'center',
-    fontSize: 20,
-    color:'white'
+    fontSize: 36,
+    color: 'white'
+  },
+  startBtnWrap: {
+    marginTop:20,
+    backgroundColor: '#237BA1',
+    borderRadius: 30
+  },
+  startBtn: {
+    paddingVertical: 10,
+    textAlign: 'center',
+    color: 'white',
+    fontSize:24,
   }
 });
 

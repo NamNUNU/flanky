@@ -7,10 +7,13 @@ import {
   AsyncStorage,
   TouchableOpacity
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import { SelectListItem } from '../../common/Model';
 
 interface SelectListProps {
   title?: string;
-  selectListItem: string[];
+  selectListItem: SelectListItem[];
   onPress: (title) => void;
 }
 
@@ -30,10 +33,17 @@ class SelectList extends React.Component<SelectListProps, {}> {
           {this.props.selectListItem.map((item, index) => {
             return (
               <TouchableOpacity
-                style={styles.levelButton}
+                style={styles.levelCard}
                 onPress={() => this.props.onPress(index)}
               >
-                <Text style={styles.levelText}>{item}</Text>
+                <View style={styles.levelLeft}>
+                  <Icon name="user-circle" size={80} color={item.color} />
+                </View>
+                <View style={styles.levelRight}>
+                  <Text style={styles.levelTitle}>{item.level}</Text>
+                  <Text style={styles.levelDesc}>{item.desc}</Text>
+                  <Text style={styles.levelDesc2}>{item.desc2}</Text>
+                </View>
               </TouchableOpacity>
             );
           })}
@@ -45,8 +55,11 @@ class SelectList extends React.Component<SelectListProps, {}> {
 
 const styles = StyleSheet.create({
   titleView: {
-    marginBottom: 10,
-    alignItems: 'center'
+    marginBottom: 20,
+    paddingVertical:10,
+    alignItems: 'center',
+    backgroundColor:'#237BA1',
+    borderRadius: 30,
   },
   titleText: {
     fontSize: 24,
@@ -54,18 +67,41 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     flexDirection: 'column',
-    alignItems:'center'
+    alignItems: 'center'
   },
-  levelButton: {
+  levelCard: {
+    paddingHorizontal:20,
     marginBottom: 10,
-    width: 100,
-    backgroundColor: '#75DDDD',
-    borderRadius: 20
+    width: '100%',
+    height: 150,
+    flexDirection: 'row',
+    backgroundColor: '#C2E1EF',
+    borderRadius: 20,
+    alignItems: 'center',
   },
-  levelText: {
+  levelLeft: {
+    flex:1,
+    alignItems: 'center',
+  },
+  levelRight: {
+    flex:2,
+  },
+  levelTitle: {
+    marginBottom:5,
     textAlign: 'center',
-    padding: 10,
-    fontSize: 20,
+    fontSize: 36,
+    color: 'black'
+  },
+  levelDesc: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: 'black',
+    borderBottomWidth: 1,
+    borderBottomColor: '#9c9c9c',
+  },
+  levelDesc2: {
+    textAlign: 'center',
+    fontSize: 16,
     color: 'black'
   }
 });
