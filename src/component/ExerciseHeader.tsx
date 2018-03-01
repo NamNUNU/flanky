@@ -1,50 +1,27 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import * as Progress from 'react-native-progress';
 
 interface ExerciseHeaderProps {
-  todaySeconds: number;
-  currentOrder: number;
+  currentStep: number;
 }
 
-interface ExerciseHeaderState {
-  flankTimeList: number[];
-}
-
-class ExerciseHeader extends Component<
-  ExerciseHeaderProps,
-  ExerciseHeaderState
-> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      flankTimeList: [
-        this.props.todaySeconds,
-        -1,
-        this.props.todaySeconds,
-        -1,
-        this.props.todaySeconds
-      ]
-    };
-  }
-
+class ExerciseHeader extends Component<ExerciseHeaderProps, {}> {
   render() {
-    const { currentOrder } = this.props;
+    const { currentStep } = this.props;
     return (
       <View style={styles.exerciseHeader}>
-        {this.state.flankTimeList.map((item, index) => {
-          return (
-            <View key={index} style={styles.flankTimebox}>
-              <Text
-                style={[
-                  styles.flankTimeText,
-                  currentOrder === index && styles.currentOrder
-                ]}
-              >
-                {item < 0 ? 'R' : this.props.todaySeconds}
-              </Text>
-            </View>
-          );
-        })}
+        <View>
+          <Text>{currentStep} / 5</Text>
+        </View>
+        <View>
+          <Progress.Bar 
+          progress={currentStep / 5} 
+          width={200} 
+          color={'#80ffe8'}
+          borderColor={'#000000'}
+          />
+        </View>
       </View>
     );
   }
@@ -54,23 +31,6 @@ const styles = StyleSheet.create({
   exerciseHeader: {
     flexDirection: 'row',
     marginBottom: 20
-  },
-  flankTimebox: {
-    flex: 1,
-    justifyContent: 'center'
-  },
-  flankTimeText: {
-    paddingVertical: 10,
-    marginHorizontal: 5,
-    textAlign: 'center',
-    borderColor: '#9d9d9d',
-    borderWidth: 1,
-    borderRadius: 10,
-    fontSize: 16
-  },
-  currentOrder: {
-    backgroundColor: '#eccbd9',
-    overflow: 'hidden'
   }
 });
 

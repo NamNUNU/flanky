@@ -20,7 +20,7 @@ interface ExerciseScreenState {
 
   flackTimeList: number[];
   goalSeconds: number;
-  currentOrder: number;
+  currentStep: number;
   currentSeconds: number;
 
   isExerciseMode: boolean;
@@ -38,7 +38,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     super(props);
     this.state = {
       ...this.state,
-      currentOrder: 0,
+      currentStep: 0,
       currentSeconds: 0,
       isRunning: false,
       isExerciseMode: false
@@ -62,8 +62,8 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
   }
 
   // 현재 모드에 따라 운동/휴식 시간을 반환
-  getTodaySeconds(currentOrder: number) {
-    return currentOrder % 2 === this.ORDER_EXERCISE
+  getTodaySeconds(currentStep: number) {
+    return currentStep % 2 === this.ORDER_EXERCISE
       ? this.todaySeconds
       : this.todaySeconds / 2; // 휴식은 운동 시간의 절반
   }
@@ -89,7 +89,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
   _reset() {
     clearInterval(this.exerciseTimer);
-    const goalSeconds = this.getTodaySeconds(this.state.currentOrder);
+    const goalSeconds = this.getTodaySeconds(this.state.currentStep);
     this.setState({
       ...this.state,
       isRunning: false,
@@ -100,13 +100,13 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
   // 시간이 다되었을 때
   _timeOut() {
-    let currentOrder = this.state.currentOrder + 1;
-    const goalSeconds = this.getTodaySeconds(currentOrder);
+    let currentStep = this.state.currentStep + 1;
+    const goalSeconds = this.getTodaySeconds(currentStep);
 
     clearInterval(this.exerciseTimer);
 
     // 마지막 라운드 over
-    if (currentOrder > 4) {
+    if (currentStep > 4) {
       // 다음 단계로 올림
       const { userData } = this.state;
       userData.todayStep += 1
@@ -117,7 +117,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     this.setState(
       {
         ...this.state,
-        currentOrder,
+        currentStep,
         goalSeconds,
         currentSeconds: goalSeconds,
         isRunning: false
@@ -136,7 +136,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
 
   getTitleText() {
     if (!this.state.isRunning) return '운동을 시작해볼까요?';
-    return this.state.currentOrder % 2 === this.ORDER_EXERCISE
+    return this.state.currentStep % 2 === this.ORDER_EXERCISE
       ? '운동 중입니다. 힘내세요'
       : '휴식을 취하세요';
   }
@@ -147,7 +147,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
       currentSeconds,
       isRunning,
       userData,
-      currentOrder,
+      currentStep,
       goalSeconds
     } = this.state;
 
@@ -158,14 +158,14 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
             <View>
               <ExerciseHeader
                 todaySeconds={this.todaySeconds}
-                currentOrder={currentOrder}
+                currentStep={currentStep}
               />
             </View>
             <View>
               <Text style={styles.roundText}>
-                {currentOrder % 2 === 1
+                {currentStep % 2 === 1
                   ? 'Rest'
-                  : (currentOrder + 2) / 2 + 'Round'}
+                  : (currentStep + 2) / 2 + 'Round'}
               </Text>
             </View>
 
