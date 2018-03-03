@@ -5,7 +5,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Exercise from '../common/Exercise';
 import { UserData } from '../common/Model';
 import { NavigationProps } from '../common/Model';
-import { CommonStyles } from '../common/CommonStyles';
+import CommonStyle from '../common/CommonStyle';
 
 // utill
 import Router from '../util/Router';
@@ -65,42 +65,40 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
     console.log('isDisable', isDisable);
 
     return (
-      <View style={styles.container}>
+      <CommonStyle>
         {userData === undefined ? (
           <HomeEmptySetup onPressSetup={this.onPressSetup.bind(this)} />
         ) : (
-          <View style={CommonStyles.container}>
-            <Text style={styles.title}>오늘의 운동</Text>
-            {userData && (
-              <HomePlanView
-                exercisePlan={exercisePlan}
-                currentStep={currentStep}
-                onPressRightButton={this.onPressRightButton.bind(this)}
-                onPressLeftButton={this.onPressLeftButton.bind(this)}
-              />
-            )}
-            <TouchableOpacity
-              style={styles.startBtnWrap}
-              onPress={this._onPressStartButton.bind(this)}
-              disabled={userData.todayStep !== currentStep}
-            >
-              {userData.todayStep === currentStep && (
-                <Text style={styles.startBtn}>Exercise Start</Text>
+          <View>
+            <View>
+              <Text style={styles.title}>오늘의 운동</Text>
+              {userData && (
+                <HomePlanView
+                  exercisePlan={exercisePlan}
+                  currentStep={currentStep}
+                  onPressRightButton={this.onPressRightButton.bind(this)}
+                  onPressLeftButton={this.onPressLeftButton.bind(this)}
+                />
               )}
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.startBtnWrap}
+                onPress={this._onPressStartButton.bind(this)}
+                disabled={userData.todayStep !== currentStep}
+              >
+                {userData.todayStep === currentStep && (
+                  <Text style={styles.startBtn}>Start</Text>
+                )}
+              </TouchableOpacity>
+            </View>
             <Calendar userData={userData} exercisePlan={exercisePlan} />
           </View>
         )}
-      </View>
+      </CommonStyle>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#29a2d9'
-  },
   title: {
     marginBottom: 20,
     textAlign: 'center',
@@ -108,12 +106,14 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   startBtnWrap: {
+    width: 150,
     marginTop: 20,
-    backgroundColor: '#237BA1',
-    borderRadius: 30
+    backgroundColor: CommonStyle.flanky_darkgreen,
+    borderRadius: 30,
+    alignItems: 'center'
   },
   startBtn: {
-    paddingVertical: 10,
+    paddingVertical: 5,
     textAlign: 'center',
     color: 'white',
     fontSize: 24

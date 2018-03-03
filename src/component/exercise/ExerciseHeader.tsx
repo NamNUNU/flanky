@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import CommonStyle from '../../common/CommonStyle';
 import * as Progress from 'react-native-progress';
 
 interface ExerciseHeaderProps {
@@ -26,14 +27,6 @@ class ExerciseHeader extends Component<ExerciseHeaderProps, {}> {
           <Text style={styles.infoDesc}>{currentStep+1}/5</Text>
           </View>
         </View>
-        {/* <View>
-          <Progress.Bar
-            progress={currentStep / 5}
-            width={200}
-            color={'#80ffe8'}
-            borderColor={'#000000'}
-          />
-        </View> */}
       </View>
     );
   }
@@ -47,12 +40,12 @@ const styles = StyleSheet.create({
     paddingHorizontal:40,
     paddingVertical: 10,
     width: '100%',
-    backgroundColor: '#65bbdf',
+    backgroundColor: CommonStyle.flanky_lightgreen,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
   infoArea: {
-    backgroundColor: '#29a2d9',
+    backgroundColor: CommonStyle.flanky_green,
     borderRadius: 30,
     paddingVertical:10,
     paddingHorizontal:13,

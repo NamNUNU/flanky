@@ -7,6 +7,7 @@ import { UserData } from '../../common/Model';
 interface CalendarProps {
   userData: UserData;
   exercisePlan: number[];
+  style?: Object;
 }
 
 interface CalendarState {
@@ -27,7 +28,7 @@ class Calendar extends Component<CalendarProps, CalendarState> {
     console.log('length', exercisePlan.length);
     exercisePlan.forEach((day, index) => {
       days.push(index + 1);
-      if ((index + 1) % 5 === 0) {
+      if ((index + 1) % 6 === 0) {
         weeks.push(days);
         days = [];
       }
@@ -36,26 +37,31 @@ class Calendar extends Component<CalendarProps, CalendarState> {
   }
   render() {
     const { weeksArray } = this.state;
-    // console.log('weeksArray',weeksArray)
+
     return (
-      <View style={styles.calendar}>
-        {weeksArray.map((item, index) => {
-          return (
-            <View key={index} style={styles.week}>
-              {item.map((day, dayIndex) => {
-                return (
-                  <View style={styles.day}>
-                    <View style={styles.dayOutline}>
-                      <Text key={dayIndex} style={styles.dayTxt}>
-                        {day}
-                      </Text>
+      <View style={this.props.style}>
+        <View style={styles.title}>
+          <Text style={styles.titleText}>30 days</Text>
+        </View>
+        <View style={styles.calendar}>
+          {weeksArray.map((item, index) => {
+            return (
+              <View key={index} style={styles.week}>
+                {item.map((day, dayIndex) => {
+                  return (
+                    <View style={styles.day}>
+                      <View>
+                        <Text key={dayIndex} style={styles.dayTxt}>
+                          {day}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                );
-              })}
-            </View>
-          );
-        })}
+                  );
+                })}
+              </View>
+            );
+          })}
+        </View>
       </View>
     );
   }
@@ -63,28 +69,31 @@ class Calendar extends Component<CalendarProps, CalendarState> {
 
 const styles = StyleSheet.create({
   calendar: {
-      borderRadius: 10,
-      overflow:'hidden'
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: 'white',
+    padding:10,
+  },
+  title: {
+    backgroundColor: '#237BA1'
+  },
+  titleText: {
+    paddingVertical: 10,
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 24
   },
   week: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   day: {
     flex: 1,
-    padding: 10,
-    backgroundColor: '#C2E1EF'
-  },
-  dayOutline: {
-    paddingVertical: 5,
-    borderWidth: 1,
-    borderColor: 'red',
-    borderRadius: 40,
-    backgroundColor: '#237BA1'
+    paddingVertical: 8
   },
   dayTxt: {
     textAlign: 'center',
-    fontSize: 24,
-    color: 'white'
+    fontSize: 16
   }
 });
 

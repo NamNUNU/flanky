@@ -5,7 +5,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 // model
 import Exercise from '../common/Exercise';
 import { UserData, NavigationProps, ExerciseMode } from '../common/Model';
-import { CommonStyles } from '../common/CommonStyles';
+import CommonStyles from '../common/CommonStyle';
 
 // util
 import LocalStorage from '../util/LocalStorage';
@@ -147,7 +147,7 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
     } = this.state;
 
     return (
-      <View style={styles.container}>
+      <CommonStyles>
         {userData && (
           <View>
             <View>
@@ -186,16 +186,12 @@ class ExerciseScreen extends Component<NavigationProps, ExerciseScreenState> {
             isRunning={isRunning}
           />
         </View>
-      </View>
+        </CommonStyles>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#29a2d9'
-  },
   roundText: {
     paddingVertical: 20,
     textAlign: 'center',

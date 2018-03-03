@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Router from '../util/Router';
 
 // common
-import { CommonStyles } from '../common/CommonStyles';
+import CommonStyle from '../common/CommonStyle';
 import { NavigationProps } from '../common/Model';
 
 class FinishScreen extends Component<NavigationProps, {}> {
@@ -34,10 +34,10 @@ class FinishScreen extends Component<NavigationProps, {}> {
           <Text style={styles.desc}>푹쉬고 내일도 열심히 운동해요!</Text>
         </View>
         <TouchableOpacity
-          style={CommonStyles.blueBtn}
+          
           onPress={this._onPressComfirm.bind(this)}
         >
-          <Text style={CommonStyles.blueBtnTxt}>확인</Text>
+          <Text>확인</Text>
         </TouchableOpacity>
       </View>
     );

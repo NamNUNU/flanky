@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import CommonStyle from '../../common/CommonStyle'
+
 interface TimeControlBtnProps {
   onPressTimeControlBtn: () => void;
   onPressEndBtn: () => void;
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
   timeControlBtn: {
     flex: 1,
     paddingVertical: 20,
-    backgroundColor: '#65bbdf',
+    backgroundColor: CommonStyle.flanky_darkgreen,
     borderWidth: 0.3,
     borderColor: 'white'
   },

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import CommonStyle from '../../common/CommonStyle';
+
 interface AddTimeButtonProps {
   onPressAddSeconds: () => void;
   isRunning:boolean;
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
       addSecondsLeft: {
         flex: 4,
         flexDirection: 'row',
-        backgroundColor: '#65BADF',
+        backgroundColor: CommonStyle.flanky_darkgreen,
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20,
       },
