@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-// model
+// common
 import { UserData, NavigationProps, ExerciseMode } from '../../common/Model';
+import CommonStyle from '../../common/CommonStyle';
 
 interface ExerciseTimerProps {
   todaySeconds: number;
@@ -15,9 +16,9 @@ class ExerciseTimer extends Component<ExerciseTimerProps, {}> {
   getTimerColor() {
     const remainTimeRate =
       this.props.currentSeconds / this.props.todaySeconds * 100;
-    if (remainTimeRate > 50) return '#00e0ff';
-    else if (remainTimeRate > 20) return '#fb8b24';
-    else return '#d90368';
+    if (remainTimeRate > 50) return CommonStyle.timer_blue;
+    else if (remainTimeRate > 20) return CommonStyle.timer_orange;
+    else return CommonStyle.timer_red;
   }
 
   getTimerText() {

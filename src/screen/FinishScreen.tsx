@@ -9,6 +9,7 @@ import Router from '../util/Router';
 // common
 import CommonStyle from '../common/CommonStyle';
 import { NavigationProps } from '../common/Model';
+import DarkGreenButton from '../component/common/DarkGreenButton';
 
 class FinishScreen extends Component<NavigationProps, {}> {
   _onPressComfirm() {
@@ -22,44 +23,39 @@ class FinishScreen extends Component<NavigationProps, {}> {
 
   render() {
     return (
-      <View style={styles.container}>
+      <CommonStyle>
         <View style={styles.titleWrap}>
           <Text style={styles.title}>운동 종료</Text>
         </View>
         <View style={styles.resultImageWrap}>
           <Icon name="trophy" size={120} color={'white'} />
         </View>
-        <View  style={styles.descWrap}>
+        <View style={styles.descWrap}>
           <Text style={styles.desc}>수고했어요</Text>
           <Text style={styles.desc}>푹쉬고 내일도 열심히 운동해요!</Text>
         </View>
-        <TouchableOpacity
-          
-          onPress={this._onPressComfirm.bind(this)}
-        >
-          <Text>확인</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.btnWrap}>
+          <DarkGreenButton
+            text={'확인'}
+            onPress={this._onPressComfirm.bind(this)}
+          />
+        </View>
+      </CommonStyle>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#29a2d9',
-    padding: 20
-  },
-  titleWrap:{
-    paddingVertical:20,
+  titleWrap: {
+    paddingVertical: 20
   },
   title: {
     fontSize: 32,
     color: 'white',
-    textAlign:'center'
+    textAlign: 'center'
   },
-  descWrap:{
-    paddingVertical:20,
+  descWrap: {
+    paddingVertical: 20
   },
   desc: {
     fontSize: 24,
@@ -71,6 +67,9 @@ const styles = StyleSheet.create({
   resultImage: {
     width: 250,
     height: 200
+  },
+  btnWrap: {
+    alignItems: 'center'
   }
 });
 

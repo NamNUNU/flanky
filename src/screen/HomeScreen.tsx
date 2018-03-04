@@ -70,8 +70,8 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
         {userData === undefined ? (
           <HomeEmptySetup onPressSetup={this.onPressSetup.bind(this)} />
         ) : (
-          <View>
-            <View>
+          <View style={styles.home}>
+            <View style={styles.upperSection}>
               <Text style={styles.title}>오늘의 운동</Text>
               {userData && (
                 <HomePlanView
@@ -81,13 +81,20 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
                   onPressLeftButton={this.onPressLeftButton.bind(this)}
                 />
               )}
-              <DarkGreenButton
-                disabled={userData.todayStep !== currentStep}
-                onPress={this._onPressStartButton.bind(this)}
-                text={'Start'}
-              />
+                <View style={styles.btnWrap}>
+                  <DarkGreenButton
+                    disabled={userData.todayStep !== currentStep}
+                    onPress={this._onPressStartButton.bind(this)}
+                    text={'Start'}
+                  />
+                </View>
             </View>
-            <Calendar userData={userData} exercisePlan={exercisePlan} />
+
+            <Calendar
+              style={styles.lowerSection}
+              userData={userData}
+              exercisePlan={exercisePlan}
+            />
           </View>
         )}
       </CommonStyle>
@@ -96,11 +103,25 @@ class HomeScreen extends Component<NavigationProps, HomeScreenState> {
 }
 
 const styles = StyleSheet.create({
+  home: {
+    flex: 1,
+    flexDirection: 'column'
+  },
+  upperSection: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  lowerSection: {
+    flex: 1
+  },
   title: {
     marginBottom: 20,
     textAlign: 'center',
     fontSize: 36,
     color: 'white'
+  },
+  btnWrap: {
+    alignItems: 'center'
   }
 });
 

@@ -15,7 +15,7 @@ class DarkGreenButton extends Component<DarkGreenButtonProps, {}> {
     const { disabled, text } = this.props;
     return (
       <TouchableOpacity
-        style={styles.btnWrap}
+        style={[styles.btnWrap,disabled && styles.disabledBtnWrap]}
         onPress={this.props.onPress}
         disabled={disabled}
       >
@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
     backgroundColor: CommonStyle.flanky_darkgreen,
     borderRadius: 30,
     alignItems: 'center'
+  },
+  disabledBtnWrap: {
+    backgroundColor: '#9c9c9c',
   },
   btnText: {
     paddingVertical: 5,

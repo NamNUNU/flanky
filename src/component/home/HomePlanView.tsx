@@ -66,14 +66,17 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   planLeftBtn: {
-    flex: 1
+    flex: 3,
+    alignItems: 'flex-end',
   },
   planRightBtn: {
-    flex: 1
+    flex: 3,
+    alignItems: 'flex-start',
   },
   planText: {
     flex: 4,
-    color: 'white'
+    color: 'white',
+    justifyContent:'center'
   },
   leftBtnTxt: {
     textAlign: 'center',

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 //common
 import { UserData } from '../../common/Model';
+import CommonStyle from '../../common/CommonStyle';
 
 interface CalendarProps {
   userData: UserData;
@@ -50,11 +51,16 @@ class Calendar extends Component<CalendarProps, CalendarState> {
                 {item.map((day, dayIndex) => {
                   return (
                     <View style={styles.day}>
-                      <View>
-                        <Text key={dayIndex} style={styles.dayTxt}>
-                          {day}
-                        </Text>
-                      </View>
+                      <Text
+                        key={dayIndex}
+                        style={[
+                          styles.dayTxt,
+                          this.props.userData.todayStep + 1 === day &&
+                            styles.currentDayTxt
+                        ]}
+                      >
+                        {day}
+                      </Text>
                     </View>
                   );
                 })}
@@ -69,14 +75,12 @@ class Calendar extends Component<CalendarProps, CalendarState> {
 
 const styles = StyleSheet.create({
   calendar: {
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    overflow: 'hidden',
-    backgroundColor: 'white',
-    padding:10,
+    paddingHorizontal: 10,
+    paddingVertical: 25,
+    backgroundColor: 'white'
   },
   title: {
-    backgroundColor: '#237BA1'
+    backgroundColor: CommonStyle.flanky_darkblue
   },
   titleText: {
     paddingVertical: 10,
@@ -85,15 +89,24 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   week: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   day: {
-    flex: 1,
-    paddingVertical: 8
+    flex: 1
   },
   dayTxt: {
+    width: 40,
     textAlign: 'center',
-    fontSize: 16
+    fontSize: 16,
+    paddingVertical: 8
+  },
+  currentDayTxt: {
+    borderRadius: 15,
+    overflow: 'hidden',
+    backgroundColor: CommonStyle.flanky_darkgreen,
+    color: 'white',
+    fontWeight: 'bold'
   }
 });
 
